@@ -11,10 +11,5 @@ class Item extends \Illuminate\Database\Eloquent\Model
     public $timestamps = false;
 
 
-    public static function findById($id) {
-        print ('afficher un item en particulier, dont l\'id est passé en paramêtre dans l\'url (test.php?id=1)' . '<br>');
-        $liste = Item::where('id', '=', 1)->first();
-        echo ($liste);
-    }
 
 }

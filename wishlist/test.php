@@ -27,11 +27,24 @@ foreach ($listItem as $value){
     echo $value;
     echo "<br>";
 }
-<<<<<<< HEAD
 
-Item::findById($_GET["id"]);
+echo "<br>";
+$liste = Item::where('id', '=', $_GET["id"])->first();
+echo ($liste);
 
-=======
-echo "César est pas ergonomique";
->>>>>>> 8ccd4957059f12a8f47ca464a950d1cb9f4ae48a
-//echo $q1->toJson();
+
+echo "<br>";
+
+$i = new Item();
+$i->nom = 'coussin';
+$i->descr = 'avec une image Gandalf';
+$i->tarif = 15;
+$i->liste_id = 2;
+$res = $i->save();
+if($res){
+    echo "Nouvelle insersion $i";
+} else {
+    echo "$i n'a pas été inséré";
+}
+
+
