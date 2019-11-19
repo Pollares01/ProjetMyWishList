@@ -28,6 +28,4 @@ foreach ($listItem as $value){
     echo "<br>";
 }
 
-
-echo "coucou";
 //echo $q1->toJson();
