@@ -28,4 +28,6 @@ foreach ($listItem as $value){
     echo "<br>";
 }
 
+Item::findById($_GET["id"]);
+
 //echo $q1->toJson();
