@@ -27,5 +27,11 @@ foreach ($listItem as $value){
     echo $value;
     echo "<br>";
 }
+<<<<<<< HEAD
 
+Item::findById($_GET["id"]);
+
+=======
+echo "César est pas ergonomique";
+>>>>>>> 8ccd4957059f12a8f47ca464a950d1cb9f4ae48a
 //echo $q1->toJson();
