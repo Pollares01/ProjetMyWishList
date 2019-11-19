@@ -1,6 +1,7 @@
 <?php
 
 use wishlist\modele\Liste;
+use wishlist\modele\Item;
 use Illuminate\Database\Capsule\Manager as DB;
 
 require_once 'vendor/autoload.php';
@@ -16,6 +17,13 @@ $db->bootEloquent();
 $list = Liste::get();
 
 foreach ($list as $value){
+    echo $value;
+    echo "<br>";
+}
+echo "<br>";
+$listItem = Item::get();
+
+foreach ($listItem as $value){
     echo $value;
     echo "<br>";
 }
