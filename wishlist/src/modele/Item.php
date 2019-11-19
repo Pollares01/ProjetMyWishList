@@ -17,4 +17,8 @@ class Item extends \Illuminate\Database\Eloquent\Model
         echo ($liste);
     }
 
+    public function liste() {
+        return $this->belongsTo('wishlist\modele\Liste','no');
+    }
+
 }
