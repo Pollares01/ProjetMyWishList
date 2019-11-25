@@ -31,9 +31,8 @@ foreach ($listItem as $value){
 echo "<br>";
 $liste = Item::where('id', '=', $_GET["id"])->first();
 echo ($liste);
-
-
 echo "<br>";
+
 
 $i = new Item();
 $i->nom = 'coussin';
@@ -47,4 +46,21 @@ if($res){
     echo "$i n'a pas été inséré";
 }
 
+$list = new Liste();
+foreach ($list as $l) {
+    echo 'testListe' . '<br>';
+    
+}
+
+$it = new Item();
+foreach ($it as $i) {
+    echo 'testItem' . '<br>';
+}
+
+$liste2 = Liste::where('no','=','1')->first();
+$req = $liste2->items()->get();
+foreach ($req as $r) {
+    echo ("<br>");
+    print($r);
+}
 

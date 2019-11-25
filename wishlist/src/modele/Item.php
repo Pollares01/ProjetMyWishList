@@ -1,5 +1,4 @@
 <?php
-
 namespace wishlist\modele;
 
 class Item extends \Illuminate\Database\Eloquent\Model
@@ -10,10 +9,8 @@ class Item extends \Illuminate\Database\Eloquent\Model
     protected $primaryKey = 'id';
     public $timestamps = false;
 
-
-
     public function liste() {
-        return $this->belongsTo('wishlist\modele\Liste','no');
+        return $this->belongsTo('wishlist\modele\Liste', 'id');
     }
 
 }
