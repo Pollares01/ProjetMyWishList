@@ -12,7 +12,7 @@ $db->addConnection($file);
 $db->setAsGlobal();
 $db->bootEloquent();
 
-$list = Liste::get();
+/**$list = Liste::get();
 
 foreach($list as $value){
     echo $value;
@@ -20,4 +20,13 @@ foreach($list as $value){
 }
 
 $res = Liste::where('no','=',2)->first();
-echo $res;
+echo $res;**/
+
+
+$liste = Liste::where('no', '=', $_GET["no"])->first();
+$items2 = $liste->items()->get();
+foreach ($items2 as $value){
+    echo($value);
+    echo "<br>";
+}
+
