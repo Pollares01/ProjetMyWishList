@@ -12,6 +12,6 @@ class Liste extends \Illuminate\Database\Eloquent\Model
     public $timestamp = false;
 
     public function items() {
-        return $this->hasMany('wishlist\modele\Item','id');
+        return $this->hasMany('wishlist\modele\Item','id')->get();
     }
 }
