@@ -3,6 +3,14 @@ use wishlist\controller\ItemController;
 use wishlist\controller\ListeController;
 require 'vendor/autoload.php';
 
+use Illuminate\Database\Capsule\Manager as DB;
+
+$file = parse_ini_file('src/conf/conf.ini');
+$db = new DB();
+$db->addConnection($file);
+$db->setAsGlobal();
+$db->bootEloquent();
+
 $app = new \Slim\Slim();
 
 $app->get('/liste/afficher', function (){
