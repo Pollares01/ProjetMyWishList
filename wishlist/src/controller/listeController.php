@@ -1,5 +1,5 @@
 <?php
-
+namespace wishlist\controller;
 class listeController
 {
     public static function afficherListe()

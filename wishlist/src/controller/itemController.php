@@ -1,5 +1,5 @@
 <?php
-
+namespace wishlist\controller;
 class itemController{
 
     public static function afficherItemID($id){
