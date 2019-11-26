@@ -1,17 +1,20 @@
 <?php
+use wishlist\controller\ItemController;
+use wishlist\controller\ListeController;
+require 'vendor/autoload.php';
 
 $app = new \Slim\Slim();
 
 $app->get('/liste/afficher', function (){
-    echo "get : afficherListe";
+    ListeController::afficherListe();
 });
 
-$app->get('/liste/afficher/itemdeliste', function() {
-    echo "get : afficherItemDeListe";
+$app->get('/liste/afficher/itemdeliste/:no', function($no) {
+    ListeController::afficherItemDeListe($no);
 });
 
-$app->get('/item/id', function() {
-    echo "get : designerItemParID";
+$app->get('/item/afficheritemid/:id', function($id) {
+    ItemController::afficherItemID($id);
 });
 
 $app->run();

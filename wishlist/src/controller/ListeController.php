@@ -1,6 +1,15 @@
 <?php
 namespace wishlist\controller;
-class listeController
+use wishlist\modele\Liste;
+use Illuminate\Database\Capsule\Manager as DB;
+
+$file = parse_ini_file('src/conf/conf.ini');
+$db = new DB();
+$db->addConnection($file);
+$db->setAsGlobal();
+$db->bootEloquent();
+
+class ListeController
 {
     public static function afficherListe()
     {
