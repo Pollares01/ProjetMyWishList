@@ -1,7 +1,6 @@
 <?php
-<<<<<<< HEAD
+
 require 'vendor/autoload.php' ;
-=======
 use wishlist\controller\ItemController;
 use wishlist\controller\ListeController;
 require 'vendor/autoload.php';
@@ -13,7 +12,6 @@ $db = new DB();
 $db->addConnection($file);
 $db->setAsGlobal();
 $db->bootEloquent();
->>>>>>> 82efa13d0dff2a68623ea209cd3cc4d861b06550
 
 $app = new \Slim\Slim();
 
