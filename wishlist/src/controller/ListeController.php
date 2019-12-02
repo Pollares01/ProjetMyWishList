@@ -1,14 +1,13 @@
 <?php
 namespace wishlist\controller;
 use wishlist\modele\Liste;
+use wishlist\vue\VueParticipant;
 class ListeController
 {
     public static function afficherListe()
     {
         $list = Liste::get();
-        foreach ($list as $value) {
-            echo $value;
-            echo "<br>";
+        $vue = new VueParticipant($list);
         }
     }
 

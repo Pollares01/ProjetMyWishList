@@ -2,18 +2,13 @@
 
 class VueParticipant {
 
-    public function __construct(array $tabItems,array $tabListes) {
-        foreach($tabItems as $values) {
-            echo($values);
-        }
-
-        foreach($tabListes as $values) {
-            echo($values);
-        }
+    public function __construct($tabItems) {
+        
     }
 
-    private function affichageListeListesSouhaits() {
-
+    private function affichageListeListesSouhaits($requete) : String {
+        $htmlSection = "<section>" . $requete . "</section>";
+        return $htmlSection;
     }
 
     private function genererListeSouhaitItems() {
