@@ -27,4 +27,8 @@ $app->get('/item/afficheritemid/:id', function($id) {
     ItemController::afficherItemID($id);
 });
 
+$app->get('/', function () {
+    echo "Bienvenue sur my wish list !";
+});
+
 $app->run();
