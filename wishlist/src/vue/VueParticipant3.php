@@ -149,31 +149,6 @@ class VueParticipant3
             </head>
             <body>
                 <header>
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="$this->urlPageIndex">WishList</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                  <ul class="navbar-nav">
-                    <li class="nav-item">
-                      <a class="nav-link" href="$this->urlAfficherToutesListes">Affichage des listes</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="$this->urlAfficherItemsListe">Affichage des items d'une liste</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="$this->urlTousItem">Affichade de la liste de tous les items</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="$this->urlITemID">Affichage d'un item par id</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="$this->urlCreerListe">Creer une liste de souhait</a>
-                  </li>
-                  </ul>
-                </div>
-              </nav>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow    ">
                   <div class="container">
                     <a class="navbar-brand" href="$this->urlPageIndex">My Wish List</a>
@@ -187,13 +162,17 @@ class VueParticipant3
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="$this->urlAfficherToutesListes">Afficher la liste des listes
-                                
                               </a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="$this->urlTousItem">Afficher la liste des items</a>
                         </li>
-                       
+                       <li class="nav-item">
+                      <a class="nav-link" href="$this->urlITemID">Affichage d'un item par id</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="$this->urlCreerListe">Creer une liste de souhait</a>
+                  </li>
                       </ul>
                     </div>
                   </div>

@@ -50,7 +50,6 @@ class VueAccueil
                         <li class="nav-item">
                           <a class="nav-link" href="$this->URLitem">Afficher la liste des items</a>
                         </li>
-                       
                       </ul>
                     </div>
                   </div>
