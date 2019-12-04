@@ -31,35 +31,30 @@ class VueAccueil
     <link rel="stylesheet" href="$this->urlCSSperso ">
 </head>
 <body>
-   !-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
-  <div class="container">
-    <a class="navbar-brand" href="#">My Wish List</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="$this->URLliste">Afficher la liste des listes
-                <span class="sr-only">(current)</span>
-              </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="$this->URLitem">Afficher la liste des items</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Services</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+                  <div class="container">
+                    <a class="navbar-brand" href="#">My Wish List</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                          <span class="navbar-toggler-icon"></span>
+                        </button>
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+                      <ul class="navbar-nav ml-auto">
+                      <li class="nav-item">
+                          <a class="nav-link" href="#">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="$this->URLliste">Afficher la liste des listes
+                                
+                              </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="$this->URLitem">Afficher la liste des items</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </nav>
 
-<!-- Full Page Image Header with Vertically Centered Content -->
 <header class="masthead">
   <div class="container h-100">
     <div class="row h-100 align-items-center">
@@ -71,7 +66,7 @@ class VueAccueil
   </div>
 </header>
 
-<!-- Page Content -->
+
 <section class="py-5">
   <div class="container">
     <h2 class="font-weight-light">Auteurs</h2>

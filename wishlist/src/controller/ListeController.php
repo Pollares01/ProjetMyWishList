@@ -2,6 +2,7 @@
 namespace wishlist\controller;
 use wishlist\modele\Liste;
 use wishlist\vue\VueParticipant3;
+use wishlist\vue\VueCreerListe;
 class ListeController
 {
     public static function afficherListe()
@@ -16,6 +17,11 @@ class ListeController
         $liste = Liste::where('no', '=', $no)->first();
         $item = $liste->items()->get();
         $vue = new VueParticipant3($item, 'ITEM_LISTE');
+        $vue->render();
+    }
+
+    public static function creerListe() {
+        $vue = new VueCreerListe();
         $vue->render();
     }
 }
