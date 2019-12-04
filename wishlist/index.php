@@ -36,7 +36,7 @@ $app->get('/creer/liste', function() {
 })->name('creer_liste');
 
 $app->get('/', function () {
-    echo "Bienvenue sur my wish list !";
-});
+    \wishlist\controller\IndexController::interfaceListe();
+})->name('page_index');
 
 $app->run();

@@ -6,7 +6,7 @@ class VueParticipant3
 {
 
     private $app;
-    private $liste, $typeAff, $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem, $urlITemID;
+    private $liste, $typeAff, $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem, $urlITemID, $urlPageIndex;
     private $URLbootstrapCSS, $URLbootstrapJS, $URLimages;
 
     public function __construct($tabItems, $typeAff) {
@@ -25,7 +25,7 @@ class VueParticipant3
 
         $this->urlITemID = $this->app->urlFor('afficher_item_id', ['id'=>5]);
 
-
+        $this->urlPageIndex = $this->app->urlFor('page_index');
 
         $this->URLimages = $this->app->request->getRootUri() . '/img/';
         $this->URLbootstrapCSS = $this->app->request->getRootUri() . '/public/bootstrap.css';
@@ -39,20 +39,27 @@ class VueParticipant3
      * @return string
      */
     private function affichageToutItem(){
-        $res = '<section>';
+        $res = '<section><div class="container"><div class="row">';
+        $i = 0;
         foreach ($this->liste as $value){
             $lienVersImage = $this->URLimages . $value->img;
+            if($i>2){
+                    $res .= "<div class=\"w-100\"></br></div>";
+                $i = 0;
+            }
             $res = $res . "
+                    <div class=\"col\">
                     <div class=\"card\" style=\"width: 18rem;\">
                           <img src=\"$lienVersImage\" class=\"card-img-top\" alt=\"\">
                           <div class=\"card-body\">
                                 <h5 class=\"card-title\">$value->nom</h5>
                                 <p class=\"card-text\">$value->descr</p>
                           </div>
-                    </div>";
+                    </div></div>";
+            $i++;
         }
-        $res = $res . "</section>";
-        return "<p> Tous les items : </p> $res";
+        $res = $res . "</section></div></div>";
+        return "<h1> Tous les items : </h1> $res";
     }
 
     /**
@@ -71,7 +78,7 @@ class VueParticipant3
                            </tr>";
         }
         $res = $res . '</section> ';
-        return "<p> liste de tout : </p> $res";
+        return "<h1> liste de tout : </h1> $res";
     }
 
     /**
@@ -92,7 +99,7 @@ class VueParticipant3
                     </div>";
         }
         $res = $res . "</section>";
-        return "<p> Les items de la liste sont : </p> $res";
+        return "<h1> Les items de la liste sont : </h1> $res";
     }
 
     /**
@@ -140,7 +147,7 @@ class VueParticipant3
             <body>
                 <header>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">WishList</a>
+                <a class="navbar-brand" href="$this->urlPageIndex">WishList</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>
@@ -156,7 +163,7 @@ class VueParticipant3
                       <a class="nav-link" href="$this->urlTousItem">Affichade de la liste de tous les items</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                      <a class="nav-link" href="$this->urlITemID">Affichage d'un item par id</a>
                     </li>
                   </ul>
                 </div>
