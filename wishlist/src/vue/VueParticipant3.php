@@ -139,20 +139,28 @@ class VueParticipant3
             </head>
             <body>
                 <header>
-                    <ul class="nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="$this->urlAfficherToutesListes">Affichage des listes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="$this->urlAfficherItemsListe"> Affichage des items d'une liste</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="$this->urlTousItem">Affichade de la liste de tous les items</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="$this->urlITemID">Affichage d'un item précis</a>
-                        </li>
-                        </ul>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">WishList</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link" href="$this->urlAfficherToutesListes">Affichage des listes</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="$this->urlAfficherItemsListe">Affichage des items d'une liste</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="$this->urlTousItem">Affichade de la liste de tous les items</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
                 </header>
                 <div>
                     $content
