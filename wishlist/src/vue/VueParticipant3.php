@@ -6,8 +6,8 @@ class VueParticipant3
 {
 
     private $app;
-    private $liste, $typeAff, $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem;
-    private    $URLbootstrapCSS, $URLbootstrapJS, $URLimages;
+    private $liste, $typeAff, $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem, $urlITemID;
+    private $URLbootstrapCSS, $URLbootstrapJS, $URLimages;
 
     public function __construct($tabItems, $typeAff) {
         $this->liste = $tabItems;
@@ -22,6 +22,10 @@ class VueParticipant3
 
         $itemUrl3 = $this->app->urlFor('afficher_tous_items');
         $this->urlTousItem = $itemUrl3;
+
+        $this->urlITemID = $this->app->urlFor('afficher_item_id', ['id'=>5]);
+
+
 
         $this->URLimages = $this->app->request->getRootUri() . '/img/';
         $this->URLbootstrapCSS = $this->app->request->getRootUri() . '/public/bootstrap.css';
@@ -122,6 +126,10 @@ class VueParticipant3
                 $content = $this->affichageToutItem();
                 break;
             }
+            case 'ITEM_ID' : {
+                $content = $this->affichageItemID();
+                break;
+            }
         }
         $html = <<<END
         <!DOCTYPE HTML>
@@ -131,24 +139,6 @@ class VueParticipant3
             </head>
             <body>
                 <header>
-                    <!--
-                    <ul>
-                        <li>
-                            <a href="$this->urlAfficherToutesListes">
-                                Affichage des listes
-                            </a>
-                        </li>
-                        <li>
-                            <a href="$this->urlAfficherItemsListe">
-                                Affichage des items d'une liste
-                            </a>
-                        </li>
-                        <li>
-                            <a href="$this->urlTousItem">
-                                Affichade de la liste de tous les items
-                            </a>
-                        </li>
-                    </ul>-->
                     <ul class="nav">
                         <li class="nav-item">
                             <a class="nav-link" href="$this->urlAfficherToutesListes">Affichage des listes</a>
@@ -160,7 +150,7 @@ class VueParticipant3
                             <a class="nav-link" href="$this->urlTousItem">Affichade de la liste de tous les items</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                            <a class="nav-link" href="$this->urlITemID">Affichage d'un item précis</a>
                         </li>
                         </ul>
                 </header>
@@ -172,5 +162,21 @@ class VueParticipant3
         </html> 
         END ;
     echo $html;
+    }
+
+    private function affichageItemID()
+    {
+        $nom = $this->liste->nom;
+        $desc = $this->liste->descr;
+        $lienVersImage = $this->URLimages . $this->liste->img;
+        $res = "
+                    <div class=\"card\" style=\"width: 18rem;\">
+                          <img src=\"$lienVersImage\" class=\"card-img-top\" alt=\"\">
+                          <div class=\"card-body\">
+                                <h5 class=\"card-title\">$nom</h5>
+                                <p class=\"card-text\">$desc</p>
+                          </div>
+                    </div>";
+        return $res;
     }
 }

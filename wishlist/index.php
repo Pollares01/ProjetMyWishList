@@ -25,7 +25,7 @@ $app->get('/liste/afficher/itemdeliste/:no', function($no) {
 
 $app->get('/item/afficheritemid/:id', function($id) {
     ItemController::afficherItemID($id);
-});
+})->name('afficher_item_id');
 
 $app->get('/item/afficher', function(){
     ItemController::afficherToutItems();
