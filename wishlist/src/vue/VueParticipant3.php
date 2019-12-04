@@ -38,27 +38,22 @@ class VueParticipant3
      * Affiche tous les items, ainsi que leur image et leur description
      * @return string
      */
-    private function affichageToutItem(){
-        $res = '<section><div class="container"><div class="row">';
-        $i = 0;
-        foreach ($this->liste as $value){
+    private function affichageToutItem()
+    {
+        $res = " <div class=\"row row-cols-1 row-cols-md-3\"> ";
+        foreach ($this->liste as $value) {
             $lienVersImage = $this->URLimages . $value->img;
-            if($i>2){
-                    $res .= "<div class=\"w-100\"></br></div>";
-                $i = 0;
-            }
             $res = $res . "
-                    <div class=\"col\">
-                    <div class=\"card\" style=\"width: 18rem;\">
+                    <div class=\"col mb-4\">
+                    <div class=\"card h-100\" style=\"width: 18rem;\">
                           <img src=\"$lienVersImage\" class=\"card-img-top\" alt=\"\">
                           <div class=\"card-body\">
                                 <h5 class=\"card-title\">$value->nom</h5>
                                 <p class=\"card-text\">$value->descr</p>
                           </div>
                     </div></div>";
-            $i++;
         }
-        $res = $res . "</section></div></div>";
+        $res = $res . "</div>";
         return "<h1> Tous les items : </h1> $res";
     }
 
