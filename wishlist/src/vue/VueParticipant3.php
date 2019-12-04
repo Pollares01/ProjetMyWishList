@@ -131,6 +131,7 @@ class VueParticipant3
             </head>
             <body>
                 <header>
+                    <!--
                     <ul>
                         <li>
                             <a href="$this->urlAfficherToutesListes">
@@ -147,7 +148,21 @@ class VueParticipant3
                                 Affichade de la liste de tous les items
                             </a>
                         </li>
-                    </ul>
+                    </ul>-->
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="$this->urlAfficherToutesListes">Affichage des listes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="$this->urlAfficherItemsListe"> Affichage des items d'une liste</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="$this->urlTousItem">Affichade de la liste de tous les items</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                        </li>
+                        </ul>
                 </header>
                 <div>
                     $content
