@@ -31,6 +31,10 @@ $app->get('/item/afficher', function(){
     ItemController::afficherToutItems();
 })->name('afficher_tous_items');
 
+$app->get('/creer/liste', function() {
+    ListeController::creerListe();
+})->name('creer_liste');
+
 $app->get('/', function () {
     echo "Bienvenue sur my wish list !";
 });
