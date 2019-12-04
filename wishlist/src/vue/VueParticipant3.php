@@ -6,7 +6,7 @@ class VueParticipant3
 {
 
     private $app;
-    private $liste, $typeAff, $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem, $urlITemID, $urlPageIndex;
+    private $liste, $typeAff, $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem, $urlITemID, $urlPageIndex, $urlCreerListe;
     private $URLbootstrapCSS, $URLbootstrapJS, $URLimages;
 
     public function __construct($tabItems, $typeAff) {
@@ -26,6 +26,9 @@ class VueParticipant3
         $this->urlITemID = $this->app->urlFor('afficher_item_id', ['id'=>5]);
 
         $this->urlPageIndex = $this->app->urlFor('page_index');
+
+        $itemUrl4 = $this->app->urlFor('creer_liste');
+        $this->urlCreerListe = $itemUrl4;
 
         $this->URLimages = $this->app->request->getRootUri() . '/img/';
         $this->URLbootstrapCSS = $this->app->request->getRootUri() . '/public/bootstrap.css';
@@ -165,6 +168,9 @@ class VueParticipant3
                     <li class="nav-item">
                       <a class="nav-link" href="$this->urlITemID">Affichage d'un item par id</a>
                     </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="$this->urlCreerListe">Creer une liste de souhait</a>
+                  </li>
                   </ul>
                 </div>
               </nav>
