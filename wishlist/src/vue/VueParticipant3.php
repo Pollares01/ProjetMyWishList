@@ -6,7 +6,7 @@ class VueParticipant3
 {
 
     private $app;
-    private $liste, $typeAff, $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem, $urlITemID;
+    private $liste, $typeAff, $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem, $urlITemID, $urlPageIndex;
     private $URLbootstrapCSS, $URLbootstrapJS, $URLimages;
 
     public function __construct($tabItems, $typeAff) {
@@ -25,7 +25,7 @@ class VueParticipant3
 
         $this->urlITemID = $this->app->urlFor('afficher_item_id', ['id'=>5]);
 
-
+        $this->urlPageIndex = $this->app->urlFor('page_index');
 
         $this->URLimages = $this->app->request->getRootUri() . '/img/';
         $this->URLbootstrapCSS = $this->app->request->getRootUri() . '/public/bootstrap.css';
@@ -140,7 +140,7 @@ class VueParticipant3
             <body>
                 <header>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">WishList</a>
+                <a class="navbar-brand" href="$this->urlPageIndex">WishList</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>
@@ -156,7 +156,7 @@ class VueParticipant3
                       <a class="nav-link" href="$this->urlTousItem">Affichade de la liste de tous les items</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                      <a class="nav-link" href="$this->urlITemID">Affichage d'un item par id</a>
                     </li>
                   </ul>
                 </div>

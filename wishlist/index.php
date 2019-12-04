@@ -34,6 +34,6 @@ $app->get('/item/afficher', function(){
 $app->get('/', function () {
     \wishlist\controller\IndexController::interfaceListe();
     echo "Bienvenue sur le site myWishList, cliquez sur les boutons au dessus pour intéragir.";
-});
+})->name('page_index');
 
 $app->run();
