@@ -1,4 +1,4 @@
-S3B - Groupe 3
+# S3B - Groupe 3 - Projet My Wish List
 
 ```
 CISTERNINO Enzo
