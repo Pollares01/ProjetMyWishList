@@ -5,74 +5,157 @@ namespace wishlist\vue;
 class VueParticipant3
 {
 
-    private $liste, $typeAff, $urlAfficherToutesListes, $urlAfficherItemsListe;
+    private $app;
+    private $liste, $typeAff, $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem;
+    private    $URLbootstrapCSS, $URLbootstrapJS, $URLimages;
 
     public function __construct($tabItems, $typeAff) {
         $this->liste = $tabItems;
         $this->typeAff = $typeAff;
+        $this->app =  \Slim\Slim::getInstance() ;
 
-        $app =\Slim\Slim::getInstance() ;
-        $itemUrl1 = $app->urlFor('afficher_toutes_listes') ;
+        $itemUrl1 =$this->app->urlFor('afficher_toutes_listes') ;
         $this->urlAfficherToutesListes = $itemUrl1 ;
 
-        $app =\Slim\Slim::getInstance() ;
-        $itemUrl2 = $app->urlFor('afficher_items_dune_liste', ['no'=>1]) ;
+        $itemUrl2 = $this->app->urlFor('afficher_items_dune_liste', ['no'=>1]) ;
         $this->urlAfficherItemsListe = $itemUrl2 ;
+
+        $itemUrl3 = $this->app->urlFor('afficher_tous_items');
+        $this->urlTousItem = $itemUrl3;
+
+        $this->URLimages = $this->app->request->getRootUri() . '/img/';
+        $this->URLbootstrapCSS = $this->app->request->getRootUri() . '/public/bootstrap.css';
+        $this->URLbootstrapJS = $this->app->request->getRootUri() . '/public/boostrap.min.js';
+
     }
 
-    private function affichageGeneral() {
-        $res = '';
+
+    /**
+     * Affiche tous les items, ainsi que leur image et leur description
+     * @return string
+     */
+    private function affichageToutItem(){
+        $res = '<section>';
         foreach ($this->liste as $value){
-            $res = $res . $value . "<br>";
+            $lienVersImage = $this->URLimages . $value->img;
+            $res = $res . "
+                    <div class=\"card\" style=\"width: 18rem;\">
+                          <img src=\"$lienVersImage\" class=\"card-img-top\" alt=\"\">
+                          <div class=\"card-body\">
+                                <h5 class=\"card-title\">$value->nom</h5>
+                                <p class=\"card-text\">$value->descr</p>
+                          </div>
+                    </div>";
         }
+        $res = $res . "</section>";
+        return "<p> Tous les items : </p> $res";
+    }
+
+    /**
+     * Affiche toutes les listes dans un tableau
+     * @return string
+     */
+    private function affichageToutListe() {
+        $res = '
+            <section>';
+        foreach ($this->liste as $value){
+            $res = $res . "<tr>
+                              <th scope=\"row\">$value->no</th>
+                              <td>$value->user_id</td>
+                              <td>$value->titre</td>
+                              <td>$value->description</td>
+                           </tr>";
+        }
+        $res = $res . '</section> ';
         return "<p> liste de tout : </p> $res";
     }
 
-    private function affichageItemUnique(){
-        $res = '';
+    /**
+     * Affiche tous les items présents dans une liste, ainsi que leur image et leur description
+     * @return string
+     */
+    private function affichageItemsDeListe(){
+        $res = '<section>';
         foreach ($this->liste as $value){
-            $res = $res . $value . "<br>";
+            $lienVersImage = $this->URLimages . $value->img;
+            $res = $res . "
+                    <div class=\"card\" style=\"width: 18rem;\">
+                          <img src=\"$lienVersImage\" class=\"card-img-top\" alt=\"\">
+                          <div class=\"card-body\">
+                                <h5 class=\"card-title\">$value->nom</h5>
+                                <p class=\"card-text\">$value->descr</p>
+                          </div>
+                    </div>";
         }
-        return "<p> Items de la liste : </p> $res";
+        $res = $res . "</section>";
+        return "<p> Les items de la liste sont : </p> $res";
     }
 
+    /**
+     * fonction utilisée pour le rendu des vues
+     */
     public function render(){
-        $content = "";
         switch ($this->typeAff){
+            //cas où l'on veut afficher toutes les listes
             case 'ALL_LISTE' : {
-                $content = $this->affichageGeneral();
+                $content = "<table class=\"table\">
+                                <thead class=\"thead-dark\">
+                                <tr>
+                                    <th scope=\"col\">Numéro</th>
+                                    <th scope=\"col\">User id</th>
+                                    <th scope=\"col\">Titre</th>
+                                    <th scope=\"col\">Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>";
+                $content = $content . $this->affichageToutListe();
+                $content = $content . "</tbody></table>";
                 break;
             }
-            case 'ITEM_UNIQUE' : {
-                $content = $this->affichageItemUnique();
+            //cas où l'on veut afficher les items d'une liste
+            case 'ITEM_LISTE' : {
+                $content = $this->affichageItemsDeListe();
+                break;
+            }
+            //cas où l'on veut afficher tous les items
+            case 'TOUT_ITEM' : {
+                $content = $this->affichageToutItem();
                 break;
             }
         }
-        $html = <<< END
-                <!DOCTYPE HTML>
-                    <html>
-                        <body>
-                        <header>
-                            <ul>
-                                <li>
-                                    <a href="$this->urlAfficherToutesListes">
-                                        Affichage des listes 
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="$this->urlAfficherItemsListe">
-                                        Affichage des items d'une liste
-                                    </a>
-                                </li>
-                            </ul>
-                        </header>
-                            <div>
-                                $content
-                            </div>
-                        </body>
-                    </html>
-                END;
-        echo $html;
-
+        $html = <<<END
+        <!DOCTYPE HTML>
+        <html>
+            <head>
+                <link rel="stylesheet" href="$this->URLbootstrapCSS">
+            </head>
+            <body>
+                <header>
+                    <ul>
+                        <li>
+                            <a href="$this->urlAfficherToutesListes">
+                                Affichage des listes
+                            </a>
+                        </li>
+                        <li>
+                            <a href="$this->urlAfficherItemsListe">
+                                Affichage des items d'une liste
+                            </a>
+                        </li>
+                        <li>
+                            <a href="$this->urlTousItem">
+                                Affichade de la liste de tous les items
+                            </a>
+                        </li>
+                    </ul>
+                </header>
+                <div>
+                    $content
+                </div>
+                <script src="$this->URLbootstrapJS"></script>
+            </body>
+        </html> 
+        END ;
+    echo $html;
     }
 }

@@ -27,6 +27,10 @@ $app->get('/item/afficheritemid/:id', function($id) {
     ItemController::afficherItemID($id);
 });
 
+$app->get('/item/afficher', function(){
+    ItemController::afficherToutItems();
+})->name('afficher_tous_items');
+
 $app->get('/', function () {
     echo "Bienvenue sur my wish list !";
 });

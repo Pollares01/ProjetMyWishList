@@ -15,7 +15,7 @@ class ListeController
     {
         $liste = Liste::where('no', '=', $no)->first();
         $item = $liste->items()->get();
-        $vue = new VueParticipant3($item, 'ITEM_UNIQUE');
+        $vue = new VueParticipant3($item, 'ITEM_LISTE');
         $vue->render();
     }
 }
