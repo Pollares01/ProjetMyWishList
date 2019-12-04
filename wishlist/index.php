@@ -32,7 +32,8 @@ $app->get('/item/afficher', function(){
 })->name('afficher_tous_items');
 
 $app->get('/', function () {
-    echo "Bienvenue sur my wish list !";
+    \wishlist\controller\IndexController::interfaceListe();
+    echo "Bienvenue sur le site myWishList, cliquez sur les boutons au dessus pour intéragir.";
 });
 
 $app->run();
