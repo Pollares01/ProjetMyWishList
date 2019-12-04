@@ -39,19 +39,27 @@ class VueParticipant3
      * @return string
      */
     private function affichageToutItem(){
-        $res = '<section>';
+        $res = '<section><div class="container"><div class="row">';
+        $i = 0;
         foreach ($this->liste as $value){
             $lienVersImage = $this->URLimages . $value->img;
+            if($i>2){
+                    $res .= "<div class=\"w-100\"></br></div>";
+
+                $i = 0;
+            }
             $res = $res . "
+                    <div class=\"col\">
                     <div class=\"card\" style=\"width: 18rem;\">
                           <img src=\"$lienVersImage\" class=\"card-img-top\" alt=\"\">
                           <div class=\"card-body\">
                                 <h5 class=\"card-title\">$value->nom</h5>
                                 <p class=\"card-text\">$value->descr</p>
                           </div>
-                    </div>";
+                    </div></div>";
+            $i++;
         }
-        $res = $res . "</section>";
+        $res = $res . "</section></div></div>";
         return "<p> Tous les items : </p> $res";
     }
 
