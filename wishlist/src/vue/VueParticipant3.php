@@ -45,7 +45,6 @@ class VueParticipant3
             $lienVersImage = $this->URLimages . $value->img;
             if($i>2){
                     $res .= "<div class=\"w-100\"></br></div>";
-
                 $i = 0;
             }
             $res = $res . "
@@ -60,7 +59,7 @@ class VueParticipant3
             $i++;
         }
         $res = $res . "</section></div></div>";
-        return "<p> Tous les items : </p> $res";
+        return "<h1> Tous les items : </h1> $res";
     }
 
     /**
@@ -79,7 +78,7 @@ class VueParticipant3
                            </tr>";
         }
         $res = $res . '</section> ';
-        return "<p> liste de tout : </p> $res";
+        return "<h1> liste de tout : </h1> $res";
     }
 
     /**
@@ -100,7 +99,7 @@ class VueParticipant3
                     </div>";
         }
         $res = $res . "</section>";
-        return "<p> Les items de la liste sont : </p> $res";
+        return "<h1> Les items de la liste sont : </h1> $res";
     }
 
     /**
