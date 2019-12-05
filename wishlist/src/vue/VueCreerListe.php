@@ -78,14 +78,21 @@ class VueCreerListe {
                                <label for="validationServer01">Titre</label>
                                <input type="text" class="form-control is-valid" id="validationServer01" value="Exemple : Pour fêter le bac !" required>
                                <div class="valid-feedback">
-                                   Cela semble bon!
                                </div>
                                </div>
                            </div>
                            <div class="form-group">
                                <label for="exampleFormControlTextarea1">Description</label>
-                               <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" value="ex" required></textarea>
+                               <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" required></textarea>
                            </div>
+                           <div class="form-row">
+                           <div class="col-md-4 mb-3">
+                           <label for="validationServer01">Date d'expiration</label>
+                           <input type="text" class="form-control is-valid" id="validationServer01" value="Exemple : 05/12/19" required>
+                           <div class="valid-feedback">
+                           </div>
+                           </div>
+                       </div>
                            <div class="form-group">
                            <label for="exampleFormControlFile1">Choisir une image depuis votre ordinateur</label>
                            <input type="file" class="form-control-file" id="exampleFormControlFile1">

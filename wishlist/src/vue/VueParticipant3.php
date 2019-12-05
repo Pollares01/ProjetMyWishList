@@ -194,11 +194,13 @@ class VueParticipant3
         $lienVersImage = $this->URLimages . $this->liste->img;
         $res = "
                     <div class=\"card\" style=\"width: 18rem;\">
+                    <span class='border border-primary'>
                           <img src=\"$lienVersImage\" class=\"card-img-top\" alt=\"\">
                           <div class=\"card-body\">
                                 <h5 class=\"card-title\">$nom</h5>
                                 <p class=\"card-text\">$desc</p>
                           </div>
+                    </span>
                     </div>";
         return $res;
     }
