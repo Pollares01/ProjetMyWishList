@@ -17,9 +17,6 @@ class VueCreerListe {
         $itemUrl2 = $this->app->urlFor('afficher_items_dune_liste', ['no'=>1]) ;
         $this->urlAfficherItemsListe = $itemUrl2 ;
 
-        $itemUrl3 = $this->app->urlFor('afficher_tous_items');
-        $this->urlTousItem = $itemUrl3;
-
         $this->urlITemID = $this->app->urlFor('afficher_item_id', ['id'=>5]);
 
         $itemUrl4 = $this->app->urlFor('creer_liste');
@@ -57,9 +54,6 @@ class VueCreerListe {
                         <li class="nav-item">
                           <a class="nav-link" href="$this->urlAfficherToutesListes">Afficher la liste des listes
                               </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="$this->urlTousItem">Afficher la liste des items</a>
                         </li>
                        <li class="nav-item">
                       <a class="nav-link" href="$this->urlITemID">Affichage d'un item par id</a>

@@ -12,8 +12,6 @@ class VueAccueil
 
         $this->urlAfficherToutesListes = $this->app->urlFor('afficher_toutes_listes');
 
-        $this->urlTousItem = $this->app->urlFor('afficher_tous_items');
-
         $this->urlPageIndex = $this->app->urlFor('page_index');
 
         $this->urlITemID = $this->app->urlFor('afficher_item_id', ['id'=>5]);
@@ -50,9 +48,6 @@ class VueAccueil
                         <li class="nav-item">
                           <a class="nav-link" href="$this->urlAfficherToutesListes">Afficher la liste des listes
                               </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="$this->urlTousItem">Afficher la liste des items</a>
                         </li>
                        <li class="nav-item">
                       <a class="nav-link" href="$this->urlITemID">Affichage d'un item par id</a>
