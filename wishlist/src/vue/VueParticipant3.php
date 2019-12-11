@@ -60,7 +60,16 @@ class VueParticipant3
     private function affichageItemsDeListe(){
         $res = '<section>';
         foreach ($this->liste as $value){
-            $lienVersImage = $this->URLimages . $value->img;
+            $lien = $this->app->urlFor('afficher_item_id', ['id' => $value->id]);
+            $res = $res . "
+                                <a href=\"$lien\" class='text-black-50'>
+                                    <div class='bg-light shadow'>
+                                    <h3>$value->nom</h3>
+                                    <p>$value->descr</p>
+                                    </div>
+                                </a><br><br>
+                           ";
+            /**$lienVersImage = $this->URLimages . $value->img;
             $res = $res . "
                     <div class=\"card\" style=\"width: 18rem;\">
                           <img src=\"$lienVersImage\" class=\"card-img-top\" alt=\"\">
@@ -68,10 +77,28 @@ class VueParticipant3
                                 <h5 class=\"card-title\">$value->nom</h5>
                                 <p class=\"card-text\">$value->descr</p>
                           </div>
-                    </div>";
+                    </div>";**/
         }
         $res = $res . "</section>";
         return "<h1> Les items de la liste sont : </h1> $res";
+    }
+
+    private function affichageItemID()
+    {
+        $nom = $this->liste->nom;
+        $desc = $this->liste->desc;
+        $lienVersImage = $this->URLimages . $this->liste->img;
+        $res = "
+                    <div class=\"card\" style=\"width: 18rem;\">
+                    <span class='border border-primary'>
+                          <img src=\"$lienVersImage\" class=\"card-img-top\" alt=\"\">
+                          <div class=\"card-body\">
+                                <h5 class=\"card-title\">$nom</h5>
+                                <p class=\"card-text\">$desc</p>
+                          </div>
+                    </span>
+                    </div>";
+        return $res;
     }
 
     /**
@@ -143,24 +170,6 @@ class VueParticipant3
             </body>
         </html> 
         END ;
-    echo $html;
-    }
-
-    private function affichageItemID()
-    {
-        $nom = $this->liste->nom;
-        $desc = $this->liste->desc;
-        $lienVersImage = $this->URLimages . $this->liste->img;
-        $res = "
-                    <div class=\"card\" style=\"width: 18rem;\">
-                    <span class='border border-primary'>
-                          <img src=\"$lienVersImage\" class=\"card-img-top\" alt=\"\">
-                          <div class=\"card-body\">
-                                <h5 class=\"card-title\">$nom</h5>
-                                <p class=\"card-text\">$desc</p>
-                          </div>
-                    </span>
-                    </div>";
-        return $res;
+        echo $html;
     }
 }
