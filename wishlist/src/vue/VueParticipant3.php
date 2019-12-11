@@ -183,10 +183,21 @@ class VueParticipant3
 
     private function affichageItemID()
     {
-        $nom = $this->liste->nom;
-        $desc = $this->liste->descr;
-        $lienVersImage = $this->URLimages . $this->liste->img;
+        if(isset($_POST['f1_valider']) && isset($_POST['f1_number'])){
+            echo 'coucou';
+            $idItem = $_POST[f1_number];
+            $nom = $this->liste[$idItem];
+            $desc = $this->liste[$idItem];
+            $lienVersImage = $this->URLimages . $this->liste[$idItem];
+        }else{
+            $nom= "";
+            $desc= "";
+            $lienVersImage= "";
+        }
         $res = "
+                    <form id='f1' method='POST' action='$this->app->urlFor('afficher_item_id', ['id'=>5]')/>
+                    <input type='number' id='f1_number' placeholder='ID ITEM'/>
+                    <button id='f1_valider' type='submit'>Valider et Afficher</button>
                     <div class=\"card\" style=\"width: 18rem;\">
                     <span class='border border-primary'>
                           <img src=\"$lienVersImage\" class=\"card-img-top\" alt=\"\">

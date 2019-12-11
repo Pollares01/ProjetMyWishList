@@ -27,6 +27,10 @@ $app->get('/item/afficheritemid/:id', function($id) {
     ItemController::afficherItemID($id);
 })->name('afficher_item_id');
 
+$app->post('/item/afficheritemid/:id', function($id){
+    ItemController::afficherItemID($id);
+})->name('afficher_item_id');
+
 $app->get('/item/afficher', function(){
     ItemController::afficherToutItems();
 })->name('afficher_tous_items');
