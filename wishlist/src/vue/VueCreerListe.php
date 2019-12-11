@@ -68,7 +68,7 @@ class VueCreerListe {
                 </header>
                 <div class="container h-100">
                     <div class="row h-100 align-items-center">
-                           <div class="col-12 text-center">
+                           <div class="col-12 text-center"> 
                            <form id="f1" method="get" action="VueListeCree.php">
                            <div class="form-row">
                                <div class="col-md-4 mb-3">

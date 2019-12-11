@@ -9,18 +9,19 @@ class VueParticipant3
     private $liste, $typeAff, $urlAfficherToutesListes, $urlAfficherItemsListe, $urlITemID, $urlPageIndex, $urlCreerListe;
     private $URLbootstrapCSS, $URLbootstrapJS, $URLimages;
 
-    public function __construct($tabItems, $typeAff) {
+    public function __construct($tabItems, $typeAff)
+    {
         $this->liste = $tabItems;
         $this->typeAff = $typeAff;
-        $this->app =  \Slim\Slim::getInstance() ;
+        $this->app = \Slim\Slim::getInstance();
 
-        $itemUrl1 =$this->app->urlFor('afficher_toutes_listes') ;
-        $this->urlAfficherToutesListes = $itemUrl1 ;
+        $itemUrl1 = $this->app->urlFor('afficher_toutes_listes');
+        $this->urlAfficherToutesListes = $itemUrl1;
 
-        $itemUrl2 = $this->app->urlFor('afficher_items_dune_liste', ['no'=>1]) ;
-        $this->urlAfficherItemsListe = $itemUrl2 ;
+        $itemUrl2 = $this->app->urlFor('afficher_items_dune_liste', ['no' => 1]);
+        $this->urlAfficherItemsListe = $itemUrl2;
 
-        $this->urlITemID = $this->app->urlFor('afficher_item_id', ['id'=>5]);
+        $this->urlITemID = $this->app->urlFor('afficher_item_id', ['id' => 5]);
 
         $this->urlPageIndex = $this->app->urlFor('page_index');
 
@@ -37,9 +38,10 @@ class VueParticipant3
      * Affiche toutes les listes dans un tableau
      * @return string
      */
-    private function affichageToutListe() {
+    private function affichageToutListe()
+    {
         $res = '';
-        foreach ($this->liste as $value){
+        foreach ($this->liste as $value) {
             $lien = $this->app->urlFor('afficher_items_dune_liste', ['no' => $value->no]);
             $res = $res . "
                                 <a href=\"$lien\" class='text-black-50'>
@@ -57,40 +59,71 @@ class VueParticipant3
      * Affiche tous les items présents dans une liste, ainsi que leur image et leur description
      * @return string
      */
-    private function affichageItemsDeListe(){
+    private function affichageItemsDeListe()
+    {
         $res = '<section>';
-        foreach ($this->liste as $value){
+        foreach ($this->liste as $value) {
+            $lien = $this->app->urlFor('afficher_item_id', ['id' => $value->id]);
             $lienVersImage = $this->URLimages . $value->img;
             $res = $res . "
+                    <a href=\"$lien\" class='text-black-50'>
+                          <div class='bg-light shadow'>
+                          <h3>$value->nom</h3>
+                          <p>$value->descr</p>
+                          </div>
+                     </a><br><br>";
+            /**$res = $res . "
                     <div class=\"card\" style=\"width: 18rem;\">
                           <img src=\"$lienVersImage\" class=\"card-img-top\" alt=\"\">
                           <div class=\"card-body\">
                                 <h5 class=\"card-title\">$value->nom</h5>
                                 <p class=\"card-text\">$value->descr</p>
                           </div>
-                    </div>";
+                    </div>";**/
         }
         $res = $res . "</section>";
         return "<h1> Les items de la liste sont : </h1> $res";
     }
 
+    private function affichageItemID()
+    {
+        $nom = $this->liste->nom;
+        $desc = $this->liste->desc;
+        $lienVersImage = $this->URLimages . $this->liste->img;
+        $res = "
+                    <div class=\"card\" style=\"width: 18rem;\">
+                    <span class='border border-primary'>
+                          <img src=\"$lienVersImage\" class=\"card-img-top\" alt=\"\">
+                          <div class=\"card-body\">
+                                <h5 class=\"card-title\">$nom</h5>
+                                <p class=\"card-text\">$desc</p>
+                          </div>
+                    </span>
+                    </div>";
+        return $res;
+    }
+
     /**
      * fonction utilisée pour le rendu des vues
      */
-    public function render(){
-        switch ($this->typeAff){
+    public function render()
+    {
+        switch ($this->typeAff) {
             //cas où l'on veut afficher toutes les listes
-            case 'ALL_LISTE' : {
+            case 'ALL_LISTE' :
+            {
 
                 $content = $this->affichageToutListe();
                 break;
             }
             //cas où l'on veut afficher les items d'une liste
-            case 'ITEM_LISTE' : {
+            case 'ITEM_LISTE' :
+            {
                 $content = $this->affichageItemsDeListe();
                 break;
             }
-            case 'ITEM_ID' : {
+            case 'ITEM_ID' :
+            {
                 $content = $this->affichageItemID();
                 break;
             }
@@ -142,25 +175,7 @@ class VueParticipant3
                 <script src="$this->URLbootstrapJS"></script>
             </body>
         </html> 
-        END ;
-    echo $html;
-    }
-
-    private function affichageItemID()
-    {
-        $nom = $this->liste->nom;
-        $desc = $this->liste->desc;
-        $lienVersImage = $this->URLimages . $this->liste->img;
-        $res = "
-                    <div class=\"card\" style=\"width: 18rem;\">
-                    <span class='border border-primary'>
-                          <img src=\"$lienVersImage\" class=\"card-img-top\" alt=\"\">
-                          <div class=\"card-body\">
-                                <h5 class=\"card-title\">$nom</h5>
-                                <p class=\"card-text\">$desc</p>
-                          </div>
-                    </span>
-                    </div>";
-        return $res;
+        END;
+        echo $html;
     }
 }
