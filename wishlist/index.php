@@ -39,4 +39,7 @@ $app->get('/', function () {
     \wishlist\controller\IndexController::interfaceListe();
 })->name('page_index');
 
+$app->post('/creer/liste', function () {
+})->name('page_liste_cree');
+
 $app->run();
