@@ -6,7 +6,7 @@ class VueParticipant3
 {
 
     private $app;
-    private $liste, $typeAff, $urlAfficherToutesListes, $urlAfficherItemsListe, $urlITemID, $urlPageIndex, $urlCreerListe;
+    private $liste, $typeAff, $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem, $urlITemID, $urlPageIndex, $urlCreerListe;
     private $URLbootstrapCSS, $URLbootstrapJS, $URLimages;
 
     public function __construct($tabItems, $typeAff) {
@@ -20,6 +20,9 @@ class VueParticipant3
         $itemUrl2 = $this->app->urlFor('afficher_items_dune_liste', ['no'=>1]) ;
         $this->urlAfficherItemsListe = $itemUrl2 ;
 
+        $itemUrl3 = $this->app->urlFor('afficher_tous_items');
+        $this->urlTousItem = $itemUrl3;
+
         $this->urlITemID = $this->app->urlFor('afficher_item_id', ['id'=>5]);
 
         $this->urlPageIndex = $this->app->urlFor('page_index');
@@ -31,6 +34,30 @@ class VueParticipant3
         $this->URLbootstrapCSS = $this->app->request->getRootUri() . '/public/bootstrap.css';
         $this->URLbootstrapJS = $this->app->request->getRootUri() . '/public/boostrap.min.js';
 
+    }
+
+
+    /**
+     * Affiche tous les items, ainsi que leur image et leur description
+     * @return string
+     */
+    private function affichageToutItem()
+    {
+        $res = " <div class=\"row row-cols-1 row-cols-md-3\"> ";
+        foreach ($this->liste as $value) {
+            $lienVersImage = $this->URLimages . $value->img;
+            $res = $res . "
+                    <div class=\"col mb-4\">
+                    <div class=\"card h-100\" style=\"width: 18rem;\">
+                          <img src=\"$lienVersImage\" class=\"card-img-top\" alt=\"\">
+                          <div class=\"card-body\">
+                                <h5 class=\"card-title\">$value->nom</h5>
+                                <p class=\"card-text\">$value->descr</p>
+                          </div>
+                    </div></div>";
+        }
+        $res = $res . "</div>";
+        return "<h1> Tous les items : </h1> $res";
     }
 
     /**
@@ -90,6 +117,11 @@ class VueParticipant3
                 $content = $this->affichageItemsDeListe();
                 break;
             }
+            //cas où l'on veut afficher tous les items
+            case 'TOUT_ITEM' : {
+                $content = $this->affichageToutItem();
+                break;
+            }
             case 'ITEM_ID' : {
                 $content = $this->affichageItemID();
                 break;
@@ -120,6 +152,9 @@ class VueParticipant3
                         <li class="nav-item">
                           <a class="nav-link" href="$this->urlAfficherToutesListes">Afficher la liste des listes
                               </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="$this->urlTousItem">Afficher la liste des items</a>
                         </li>
                        <li class="nav-item">
                       <a class="nav-link" href="$this->urlITemID">Affichage d'un item par id</a>

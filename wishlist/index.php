@@ -27,6 +27,11 @@ $app->get('/item/afficheritemid/:id', function($id) {
     ItemController::afficherItemID($id);
 })->name('afficher_item_id');
 
+
+$app->get('/item/afficher', function(){
+    ItemController::afficherToutItems();
+})->name('afficher_tous_items');
+
 $app->get('/creer/liste', function() {
     ListeController::creerListe();
 })->name('creer_liste');
@@ -34,8 +39,5 @@ $app->get('/creer/liste', function() {
 $app->get('/', function () {
     \wishlist\controller\IndexController::interfaceListe();
 })->name('page_index');
-
-$app->post('/creer/liste', function () {
-})->name('page_liste_cree');
 
 $app->run();
