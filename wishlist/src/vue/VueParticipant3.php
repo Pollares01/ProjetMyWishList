@@ -7,7 +7,7 @@ class VueParticipant3
 
     private $app;
     private $liste, $typeAff, $urlAfficherToutesListes, $urlAfficherItemsListe, $urlITemID, $urlPageIndex, $urlCreerListe;
-    private $URLbootstrapCSS, $URLbootstrapJS, $URLimages;
+    private $URLbootstrapCSS, $URLbootstrapJS, $URLimages, $URLpersoCSS;
 
     public function __construct($tabItems, $typeAff) {
         $this->liste = $tabItems;
@@ -30,7 +30,7 @@ class VueParticipant3
         $this->URLimages = $this->app->request->getRootUri() . '/img/';
         $this->URLbootstrapCSS = $this->app->request->getRootUri() . '/public/bootstrap.css';
         $this->URLbootstrapJS = $this->app->request->getRootUri() . '/public/boostrap.min.js';
-
+        $this->URLpersoCSS = $this->app->request->getRootUri() . '/public/css_perso.css';
     }
 
     /**
@@ -62,25 +62,17 @@ class VueParticipant3
         foreach ($this->liste as $value){
             $lien = $this->app->urlFor('afficher_item_id', ['id' => $value->id]);
             $res = $res . "
-                                <a href=\"$lien\" class='text-black-50'>
                                     <div class='bg-light shadow'>
-                                    <h3>$value->nom</h3>
+                                    <a href=\"$lien\" class='text-black-50'>
+                                    <h3 class='text-liste-main'>$value->nom</h3>
+                                    </a>
                                     <p>$value->descr</p>
                                     </div>
-                                </a><br><br>
+                                <br><br>
                            ";
-            /**$lienVersImage = $this->URLimages . $value->img;
-            $res = $res . "
-                    <div class=\"card\" style=\"width: 18rem;\">
-                          <img src=\"$lienVersImage\" class=\"card-img-top\" alt=\"\">
-                          <div class=\"card-body\">
-                                <h5 class=\"card-title\">$value->nom</h5>
-                                <p class=\"card-text\">$value->descr</p>
-                          </div>
-                    </div>";**/
         }
         $res = $res . "</section>";
-        return "<h1> Les items de la liste sont : </h1> $res";
+        return "<h1> Les items de la liste sont : </h1><br> $res";
     }
 
     private function affichageItemID()
@@ -88,7 +80,8 @@ class VueParticipant3
         $nom = $this->liste->nom;
         $desc = $this->liste->desc;
         $lienVersImage = $this->URLimages . $this->liste->img;
-        $res = "
+        $res = "   
+                    <br>
                     <div class=\"card\" style=\"width: 18rem;\">
                     <span class='border border-primary'>
                           <img src=\"$lienVersImage\" class=\"card-img-top\" alt=\"\">
@@ -127,6 +120,7 @@ class VueParticipant3
         <html>
             <head>
                 <link rel="stylesheet" href="$this->URLbootstrapCSS">
+                <link rel="stylesheet" href="$this->URLpersoCSS">
                 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
                 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

@@ -6,3 +6,12 @@
     background-position: center;
     background-repeat: no-repeat;
 }
+
+.card{
+    margin: 0 auto;
+    width: 100px;
+}
+
+.text-liste-main {
+    color: black;
+}
