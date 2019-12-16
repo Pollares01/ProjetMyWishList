@@ -79,7 +79,19 @@ class VueParticipant3
     {
         $nom = $this->liste->nom;
         $desc = $this->liste->desc;
+        $id = $this->liste->id;
+        $url = $this->app->urlFor('afficher_item_id_post',['id'=>$id]);
         $lienVersImage = $this->URLimages . $this->liste->img;
+        if (isset($_POST['participant'])) {
+            $tabItem = array("participant" => $_POST['participant'], "itemid" => $id);
+            $_SESSION['participant'] = $_POST['participant'];
+            $_SESSION['itemid'] = $id;
+        }
+        if(isset($_SESSION['participant']) && isset($_SESSION['itemid']) && $_SESSION['participant'] != null && $_SESSION['itemid'] == $id) {
+            $valeur = $_SESSION['participant'];
+        }else{
+            $valeur = '';
+        }
         $res = "   
                     <br>
                     <div class=\"card\" style=\"width: 18rem;\">
@@ -89,6 +101,10 @@ class VueParticipant3
                                 <h5 class=\"card-title\">$nom</h5>
                                 <p class=\"card-text\">$desc</p>
                           </div>
+                          <form id='form1' method='POST' action=$url>
+                            <input type='text' name='participant' placeholder='Nom du Participant' value=$valeur>      
+                            <button type='submit' name='valider' value='valid_reserverItem'>Valider</button>
+                          </form>
                     </span>
                     </div>";
         return $res;

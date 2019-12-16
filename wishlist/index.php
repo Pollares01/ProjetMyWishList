@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 require 'vendor/autoload.php' ;
 use wishlist\controller\ItemController;
 use wishlist\controller\ListeController;
@@ -27,6 +28,9 @@ $app->get('/item/afficheritemid/:id', function($id) {
     ItemController::afficherItemID($id);
 })->name('afficher_item_id');
 
+$app->post('/item/afficheritemid/:id', function($id) {
+    ItemController::afficherItemID($id);
+})->name('afficher_item_id_post');
 
 $app->get('/item/afficher', function(){
     ItemController::afficherToutItems();
@@ -35,6 +39,7 @@ $app->get('/item/afficher', function(){
 $app->get('/creer/liste', function() {
     ListeController::creerListe();
 })->name('creer_liste');
+
 
 $app->get('/', function () {
     \wishlist\controller\IndexController::interfaceListe();
