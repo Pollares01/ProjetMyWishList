@@ -3,6 +3,7 @@
 require 'vendor/autoload.php' ;
 use wishlist\controller\ItemController;
 use wishlist\controller\ListeController;
+use wishlist\controller\FormulaireOKController;
 require 'vendor/autoload.php';
 
 use Illuminate\Database\Capsule\Manager as DB;
@@ -36,6 +37,7 @@ $app->get('/', function () {
 })->name('page_index');
 
 $app->post('/creer/liste', function () {
-})->name('page_liste_cree');
+    FormulaireOKController::control();
+})->name('liste_cree');
 
 $app->run();

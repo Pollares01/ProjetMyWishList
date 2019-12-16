@@ -1,11 +1,10 @@
 <?php
 
 namespace wishlist\vue;
-use wishlist\modele\Liste;
 
 class VueCreerListe {
     
-    private $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem, $urlITemID, $urlCreerListe, $urlPageIndex, $liste, $selecteur;
+    private $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem, $urlITemID, $urlCreerListe, $urlPageIndex, $selecteur,$urlListeCree, $app;
 
     public function __construct() {
 
@@ -28,7 +27,8 @@ class VueCreerListe {
         $this->URLbootstrapCSS = $this->app->request->getRootUri() . '/public/bootstrap.css';
         $this->URLbootstrapJS = $this->app->request->getRootUri() . '/public/boostrap.min.js';
 
-        $this->liste = new Liste();
+        $this->urlListeCree = $this->app->urlFor('liste_cree');
+
     }
 
     public function render() {
@@ -66,10 +66,11 @@ class VueCreerListe {
                   </div>
                 </nav>
                 </header>
+                
                 <div class="container h-100">
                     <div class="row h-100 align-items-center">
                            <div class="col-12 text-center">
-                           <form id="f1" method="get" action="VueListeCree.php">
+                           <form id="f1" method="post" action="$this->urlListeCree">
                            <div class="form-row">
                                <div class="col-md-4 mb-3">
                                <label for="validationServer01">Titre</label>
@@ -109,7 +110,7 @@ class VueCreerListe {
                            </form>
                            </div>
                     </div>
-                </div> 
+                </div>
                 <script src="$this->URLbootstrapJS"></script>
             </body>
         </html> 
