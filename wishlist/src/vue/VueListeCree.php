@@ -74,6 +74,5 @@ class VueListeCree {
         END ;
         echo $html;
 
-        echo $_GET['titre'];
     }
 }
