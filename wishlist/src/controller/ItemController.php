@@ -1,6 +1,7 @@
 <?php
 namespace wishlist\controller;
 use wishlist\modele\Item;
+use wishlist\vue\VueCreerItem;
 use wishlist\vue\VueParticipant3;
 
 class ItemController{
@@ -15,4 +16,5 @@ class ItemController{
         $vue = new VueParticipant3($item, 'TOUT_ITEM');
         $vue->render();
     }
+
 }
