@@ -33,35 +33,16 @@ class VueListeCree {
     }
 
     public function creationDeLaListe() {
-        echo ("titre : " .  htmlspecialchars($_POST['titre'] ) . "<br>");
-        echo "description : " .  htmlspecialchars($_POST['description']) . "<br>";
-        echo "date d'expiration : " . htmlspecialchars($_POST['expiration']) . "<br>";
-        $image = $_POST['image'];
-        echo "image : " .  $_POST['image'] . "<br>";
-      /*
-        $this->liste->titre = $_POST['titre'];
-        $this->liste->description = $_POST['description'];
-        $this->liste->expiration = $_POST['expiration'];
-        $this->liste->no = 4;
-        $this->liste->user_id = 4;
-        $res = $this->liste->save();
-        if($res){
-            echo "Nouvelle insersion $this->liste";
-        } else {
-            echo "$this->liste n'a pas été inséré";
-        }*/
-        $file = parse_ini_file('src/conf/conf.ini');
-        $db = new DB();
-        $db->addConnection($file);
-        $db->setAsGlobal();
-        $db->bootEloquent();
-
         $titre = $_POST['titre'];
         $description = $_POST['description'];
         $date =  $_POST['expiration'];
 
-        $statement =("'INSERT into liste (titre,description,expiration) values ($titre,$description,$date)'");
-        $db->execute($statement);
+          $i = new Item();
+          $i->nom = $titre;
+          $i->descr = $description;
+          $i->tarif = 0;
+          $i->liste_id = 4;
+          $res = $i->save();
     }
 
     public function render() {

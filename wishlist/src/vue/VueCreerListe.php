@@ -69,13 +69,10 @@ class VueCreerListe {
                 
                 <div class="container h-100">
                     <div class="row h-100 align-items-center">
-<<<<<<< HEAD
                            <div class="col-12 text-center">
                            <form id="f1" method="post" action="$this->urlListeCree">
-=======
                            <div class="col-12 text-center"> 
                            <form id="f1" method="get" action="VueListeCree.php">
->>>>>>> c29cf91f0399a980568978ac492b4137e50b0e8a
                            <div class="form-row">
                                <div class="col-md-4 mb-3">
                                <label for="validationServer01">Titre</label>

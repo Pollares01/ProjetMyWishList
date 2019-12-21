@@ -46,11 +46,9 @@ $app->get('/', function () {
     \wishlist\controller\IndexController::interfaceListe();
 })->name('page_index');
 
-<<<<<<< HEAD
+
 $app->post('/creer/liste', function () {
     FormulaireOKController::control();
 })->name('liste_cree');
 
-=======
->>>>>>> c29cf91f0399a980568978ac492b4137e50b0e8a
 $app->run();
