@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as DB;
 
 class VueListeCree {
     
-    private $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem, $urlITemID, $urlCreerListe, $urlPageIndex, $liste;
+    private $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem, $urlITemID, $urlCreerListe, $urlPageIndex;
 
     public function __construct() {
 
@@ -29,20 +29,29 @@ class VueListeCree {
         $this->URLbootstrapCSS = $this->app->request->getRootUri() . '/public/bootstrap.css';
         $this->URLbootstrapJS = $this->app->request->getRootUri() . '/public/boostrap.min.js';
 
-        $this->liste = new Liste();
     }
 
     public function creationDeLaListe() {
+        $target_file = 'img/';
+        move_uploaded_file($_FILES["image"]["tmp_name"], $target_file.$_FILES["image"]["name"]);
+
         $titre = $_POST['titre'];
         $description = $_POST['description'];
         $date =  $_POST['expiration'];
 
-          $i = new Item();
-          $i->nom = $titre;
-          $i->descr = $description;
-          $i->tarif = 0;
-          $i->liste_id = 4;
-          $res = $i->save();
+        $titre = filter_var($titre, FILTER_SANITIZE_SPECIAL_CHARS);
+        $description = filter_var($description, FILTER_SANITIZE_SPECIAL_CHARS);
+        $date = filter_var($date, FILTER_SANITIZE_SPECIAL_CHARS);
+        
+          $l = new Liste();
+          $l->titre = $titre;
+          $l->description = $description;
+          $l->expiration = $date;
+          $l->user_id = null;
+          $res = $l->save();
+
+        print "Vous avez créé une liste de titre : " . $titre . ", de description : " . $description . ", de date d'expiration : " . $date . " et d'image : ";
+        echo '<img src="img/' . $_FILES['image']['name'] . '">';
     }
 
     public function render() {

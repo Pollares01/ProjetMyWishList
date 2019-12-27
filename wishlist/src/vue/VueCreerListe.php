@@ -70,9 +70,7 @@ class VueCreerListe {
                 <div class="container h-100">
                     <div class="row h-100 align-items-center">
                            <div class="col-12 text-center">
-                           <form id="f1" method="post" action="$this->urlListeCree">
-                           <div class="col-12 text-center"> 
-                           <form id="f1" method="get" action="VueListeCree.php">
+                           <form id="f1" method="post" action="$this->urlListeCree" enctype="multipart/form-data">
                            <div class="form-row">
                                <div class="col-md-4 mb-3">
                                <label for="validationServer01">Titre</label>
@@ -95,7 +93,7 @@ class VueCreerListe {
                        </div>
                            <div class="form-group">
                            <label for="exampleFormControlFile1">Choisir une image depuis votre ordinateur</label>
-                           <input type="file" class="form-control-file" id="exampleFormControlFile1" accept="image/png" name="image">
+                           <input type="file" class="form-control-file" id="exampleFormControlFile1" accept="test.png" name="image">
                            </div>
                            <div class="form-group">
                                <div class="form-check">

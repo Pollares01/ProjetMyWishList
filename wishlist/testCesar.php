@@ -1,36 +1,20 @@
-<?php
-
-use wishlist\modele\Item;
-use wishlist\modele\Liste;
-use Illuminate\Database\Capsule\Manager as DB;
-
-require_once 'vendor/autoload.php';
-
-$file = parse_ini_file('src/conf/conf.ini');
-$db = new DB();
-$db->addConnection($file);
-$db->setAsGlobal();
-$db->bootEloquent();
-
-/*
-* Fonctionnalité 1 : 
-* créer une nouvelle liste en lui donnant un titre, une description, une date limite de validité. 
-*/
-
-echo (Liste::get());
-
-$liste = new Liste();
-
-$liste->no = 3;
-$liste->user_id = 3;
-$liste->titre = "Création d'une nouvelle liste, voici son titre";
-$liste->description = "wishlist meilleur projet php";
-$liste->expiration = "2018-12-13";
-
-$res = $liste->save();
-/*
-if($res){
-    echo "Nouvelle insersion $liste";
-} else {
-    echo "$liste n'a pas été inséré";
-}*/
+<html>
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <form method="post" enctype="multipart/form-data">
+            <input type="file" name="photo">
+            <input type="submit">
+        </form>
+    <?php
+    if (isset($_FILES['photo']['tmp_name'])) {
+        $retour = copy($_FILES['photo']['tmp_name'], $_FILES['photo']['name']);
+        if($retour) {
+            echo '<p>La photo a bien été envoyée.</p>';
+            echo '<img src="' . $_FILES['photo']['name'] . '">';
+        }
+    }
+    ?>
+    </body>
+</html>
