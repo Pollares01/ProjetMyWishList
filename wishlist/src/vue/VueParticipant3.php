@@ -78,19 +78,34 @@ class VueParticipant3
     private function affichageItemID()
     {
         $nom = $this->liste->nom;
-        $desc = $this->liste->desc;
+        $desc = $this->liste->descr;
         $id = $this->liste->id;
+        $tarif = $this->liste->tarif;
         $url = $this->app->urlFor('afficher_item_id_post',['id'=>$id]);
         $lienVersImage = $this->URLimages . $this->liste->img;
-        if (isset($_POST['participant'])) {
-            $tabItem = array("participant" => $_POST['participant'], "itemid" => $id);
-            $_SESSION['participant'] = $_POST['participant'];
-            $_SESSION['itemid'] = $id;
+        if (isset($_POST['participant']) && isset($_POST['messageParticipant'])) {
+            if (isset($_SESSION['participants']) && isset($_SESSION['messageParticipant'])){
+                $messageReservItem = $_SESSION['messageParticipant'];
+                $messageReservItem[$id] = $_POST['messageParticipant'];
+                $_SESSION['messageParticipant'] = $messageReservItem;
+                $tabReservItem = $_SESSION['participants'];
+                $tabReservItem[$id] = $_POST['participant'];
+                $_SESSION['participants'] = $tabReservItem;
+            }else{
+                $messageReservItem = array($id => $_POST['messageParticipant']);
+                $_SESSION['messageParticipant'] = $messageReservItem;
+                $tabReservItem = array($id => $_POST['participant']);
+                $_SESSION['participants'] = $tabReservItem;
+            }
         }
-        if(isset($_SESSION['participant']) && isset($_SESSION['itemid']) && $_SESSION['participant'] != null && $_SESSION['itemid'] == $id) {
-            $valeur = $_SESSION['participant'];
+        if(isset($_SESSION['participants']) && isset($_SESSION['participants'][$id]) && isset($_SESSION['messageParticipant']) && isset($_SESSION['messageParticipant'][$id])) {
+            $tabReservItem = $_SESSION['participants'];
+            $valeurParticipant = $tabReservItem[$id];
+            $messageReservItem = $_SESSION['messageParticipant'];
+            $valeurMessage = $messageReservItem[$id];
         }else{
-            $valeur = '';
+            $valeurParticipant = '';
+            $valeurMessage = '';
         }
         $res = "   
                     <br>
@@ -99,11 +114,14 @@ class VueParticipant3
                           <img src=\"$lienVersImage\" class=\"card-img-top\" alt=\"\">
                           <div class=\"card-body\">
                                 <h5 class=\"card-title\">$nom</h5>
-                                <p class=\"card-text\">$desc</p>
+                                <p class=\"card-text\">$desc
+                                </br>
+                                Tarif : $tarif €</p>
                           </div>
                           <form id='form1' method='POST' action=$url>
-                            <input type='text' name='participant' placeholder='Nom du Participant' value=$valeur>      
+                            <input type='text' name='participant' placeholder='Nom du Participant' value=$valeurParticipant>
                             <button type='submit' name='valider' value='valid_reserverItem'>Valider</button>
+                            <input class='messageReservFormu' type='text' name='messageParticipant' placeholder='Un petit message ?' value=$valeurMessage>
                           </form>
                     </span>
                     </div>";

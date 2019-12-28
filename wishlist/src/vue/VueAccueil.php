@@ -25,8 +25,7 @@ class VueAccueil
     }
 
     public function render(){
-        $html = /** @lang text */
-            <<<END
+        $html = <<<END
 <!DOCTYPE HTML>
 <html>
 <head>
