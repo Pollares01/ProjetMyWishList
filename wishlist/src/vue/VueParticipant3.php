@@ -58,7 +58,7 @@ class VueParticipant3
      * @return string
      */
     private function affichageItemsDeListe(){
-        $res = '<section>';
+        $res ='<section>';
         foreach ($this->liste as $value){
             $lien = $this->app->urlFor('afficher_item_id', ['id' => $value->id]);
             $res = $res . "
