@@ -51,9 +51,6 @@ class VueAccueil
                           <a class="nav-link" href="$this->urlAfficherToutesListes">Afficher la liste des listes
                               </a>
                         </li>
-                       <li class="nav-item">
-                      <a class="nav-link" href="$this->urlITemID">Affichage d'un item par id</a>
-                    </li>
                     <li class="nav-item">
                     <a class="nav-link" href="$this->urlCreerListe">Creer une liste de souhait</a>
                   </li>

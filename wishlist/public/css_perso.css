@@ -19,3 +19,8 @@
 .messageReservFormu {
     width: 100%;
 }
+
+.affichageListe{
+    color : black;
+    font-size: 1.5em;
+}

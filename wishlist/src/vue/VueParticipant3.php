@@ -43,14 +43,14 @@ class VueParticipant3
             $lien = $this->app->urlFor('afficher_items_dune_liste', ['no' => $value->no]);
             $res = $res . "
                                 <a href=\"$lien\" class='text-black-50'>
-                                    <div class='bg-light shadow'>
+                                    <div class='affichageListe'>
                                     $value->titre  
                                     </div>
                                 </a><br><br>
                            ";
         }
         $res = $res . '';
-        return "<h1> Liste des Listes : </h1> $res";
+        return "<h1> Liste des Listes : </h1></br> $res";
     }
 
     /**
@@ -118,10 +118,10 @@ class VueParticipant3
                                 </br>
                                 Tarif : $tarif €</p>
                           </div>
-                          <form id='form1' method='POST' action=$url>
+                          <form id='formulaireItem' method='POST' action=$url>
                             <input type='text' name='participant' placeholder='Nom du Participant' value=$valeurParticipant>
                             <button type='submit' name='valider' value='valid_reserverItem'>Valider</button>
-                            <input class='messageReservFormu' type='text' name='messageParticipant' placeholder='Un petit message ?' value=$valeurMessage>
+                            <textarea class='messageReservFormu' name='messageParticipant' placeholder='Un petit message ?'>$valeurMessage</textarea>
                           </form>
                     </span>
                     </div>";
@@ -176,9 +176,6 @@ class VueParticipant3
                           <a class="nav-link" href="$this->urlAfficherToutesListes">Afficher la liste des listes
                               </a>
                         </li>
-                       <li class="nav-item">
-                      <a class="nav-link" href="$this->urlITemID">Affichage d'un item par id</a>
-                    </li>
                     <li class="nav-item">
                     <a class="nav-link" href="$this->urlCreerListe">Creer une liste de souhait</a>
                   </li>
