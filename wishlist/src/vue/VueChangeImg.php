@@ -50,8 +50,7 @@ class VueChangeImg {
             $item = Item::where("id" , "=" , $_SESSION['idItemActuel'])->first();
             $item->img="uno.jpg";
             $item->save();
-        } else 
-        print 'nulllllllllllllllllllllllll';
+        }
     }
     
 

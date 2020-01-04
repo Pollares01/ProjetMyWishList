@@ -85,7 +85,7 @@ class VueParticipant3
         $tarif = $this->liste->tarif;
         $url = $this->app->urlFor('afficher_item_id_post',['id'=>$this->id]);
         $urlChangeImg = $this->app->urlFor('change_img');
-
+        $urlAjoutImg = $this->app->urlFor('ajout_img');
         //supression d'une image - fonctionnalité 13
         $messageSupOk = "";
         if (isset($_POST['deleteImg'])) {
@@ -97,9 +97,10 @@ class VueParticipant3
         }
         //choix d'une image - fonctionnalité 11
         if (isset($_POST['envoyer'])) {
-            $target_file = 'img/';
-            move_uploaded_file($_FILES["image"]["tmp_name"], $target_file.$_FILES["image"]["name"]);
-            $this->liste->img = $_FILES['image']['name'];
+            //$target_file = 'img/';
+            //move_uploaded_file($_FILES["img"]["tmp_name"], $target_file . $_FILES["img"]["name"]);
+           // $this->liste->img = $_FILES['img']['name'];
+            //$this->liste->save();
         }
         $lienVersImage = $this->URLimages . $this->liste->img;
        
@@ -137,8 +138,8 @@ class VueParticipant3
                         <form method='POST' action=$urlChangeImg>
                             <button type='submit' name='changeImg'>Changer</button>
                             </form>
-                        <form method='POST' action=$url>
-                            <input type='file' accept='test.png' name='image'>
+                        <form method='POST' action=$urlAjoutImg enctype='multipart/form-data'>
+                            <input type='file' accept='test.png' name='img' >
                             <button type='submit' name='envoyer'>Envoyer</button>
                             </form>
                           <img src=\"$lienVersImage\" class=\"card-img-top\" alt=\"\">

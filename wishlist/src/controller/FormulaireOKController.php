@@ -6,6 +6,7 @@ use wishlist\vue\VueListeCree;
 use wishlist\vue\VueChangeImg;
 use wishlist\modele\Liste;
 use wishlist\modele\Item;
+use wishlist\vue\VueImageAjout;
 
 class FormulaireOKController
 {
@@ -18,6 +19,11 @@ class FormulaireOKController
         $item = Item::get();
         $liste = Liste::get();
         $vue = new VueChangeImg($item,$liste);
+        $vue->render();
+    }
+
+    public static function control3() {
+        $vue = new VueImageAjout();
         $vue->render();
     }
 }
