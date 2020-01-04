@@ -7,7 +7,8 @@ class VueParticipant3
 
     private $app;
     private $liste, $typeAff, $urlAfficherToutesListes, $urlAfficherItemsListe, $urlITemID, $urlPageIndex, $urlCreerListe;
-    private $URLbootstrapCSS, $URLbootstrapJS, $URLimages, $URLpersoCSS;
+    private $URLbootstrapCSS, $URLbootstrapJS, $URLimages, $URLpersoCSS, $urlChangeImg;
+    protected $id;
 
     public function __construct($tabItems, $typeAff) {
         $this->liste = $tabItems;
@@ -77,12 +78,31 @@ class VueParticipant3
 
     private function affichageItemID()
     {
+        $_SESSION['idItemActuel'] = $this->liste->id;
         $nom = $this->liste->nom;
         $desc = $this->liste->descr;
-        $id = $this->liste->id;
+        $this->id = $this->liste->id;
         $tarif = $this->liste->tarif;
-        $url = $this->app->urlFor('afficher_item_id_post',['id'=>$id]);
+        $url = $this->app->urlFor('afficher_item_id_post',['id'=>$this->id]);
+        $urlChangeImg = $this->app->urlFor('change_img');
+
+        //supression d'une image - fonctionnalité 13
+        $messageSupOk = "";
+        if (isset($_POST['deleteImg'])) {
+            $this->liste->img='';
+            $res = $this->liste->save();
+            if ($res) {
+                $messageSupOk = "L'image a bien été supprimée !";
+            }
+        }
+        //choix d'une image - fonctionnalité 11
+        if (isset($_POST['envoyer'])) {
+            $target_file = 'img/';
+            move_uploaded_file($_FILES["image"]["tmp_name"], $target_file.$_FILES["image"]["name"]);
+            $this->liste->img = $_FILES['image']['name'];
+        }
         $lienVersImage = $this->URLimages . $this->liste->img;
+       
         if (isset($_POST['participant']) && isset($_POST['messageParticipant'])) {
             if (isset($_SESSION['participants']) && isset($_SESSION['messageParticipant'])){
                 $messageReservItem = $_SESSION['messageParticipant'];
@@ -98,11 +118,11 @@ class VueParticipant3
                 $_SESSION['participants'] = $tabReservItem;
             }
         }
-        if(isset($_SESSION['participants']) && isset($_SESSION['participants'][$id]) && isset($_SESSION['messageParticipant']) && isset($_SESSION['messageParticipant'][$id])) {
+        if(isset($_SESSION['participants']) && isset($_SESSION['participants'][$this->id]) && isset($_SESSION['messageParticipant']) && isset($_SESSION['messageParticipant'][$this->id])) {
             $tabReservItem = $_SESSION['participants'];
-            $valeurParticipant = $tabReservItem[$id];
+            $valeurParticipant = $tabReservItem[$this->id];
             $messageReservItem = $_SESSION['messageParticipant'];
-            $valeurMessage = $messageReservItem[$id];
+            $valeurMessage = $messageReservItem[$this->id];
         }else{
             $valeurParticipant = '';
             $valeurMessage = '';
@@ -111,6 +131,16 @@ class VueParticipant3
                     <br>
                     <div class=\"card\" style=\"width: 18rem;\">
                     <span class='border border-primary'>
+                        <form method='POST' action=$url>
+                            <button type='submit' name='deleteImg'>Supprimer</button>
+                            </form>
+                        <form method='POST' action=$urlChangeImg>
+                            <button type='submit' name='changeImg'>Changer</button>
+                            </form>
+                        <form method='POST' action=$url>
+                            <input type='file' accept='test.png' name='image'>
+                            <button type='submit' name='envoyer'>Envoyer</button>
+                            </form>
                           <img src=\"$lienVersImage\" class=\"card-img-top\" alt=\"\">
                           <div class=\"card-body\">
                                 <h5 class=\"card-title\">$nom</h5>
@@ -123,6 +153,7 @@ class VueParticipant3
                             <button type='submit' name='valider' value='valid_reserverItem'>Valider</button>
                             <textarea class='messageReservFormu' name='messageParticipant' placeholder='Un petit message ?'>$valeurMessage</textarea>
                           </form>
+                          <p>$messageSupOk</p>
                     </span>
                     </div>";
         return $res;
