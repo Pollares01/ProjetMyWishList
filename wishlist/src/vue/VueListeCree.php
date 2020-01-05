@@ -7,6 +7,7 @@ use Illuminate\Database\Capsule\Manager as DB;
 class VueListeCree {
     
     private $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem, $urlITemID, $urlCreerListe, $urlPageIndex, $url;
+    private $titre, $description, $date, $image;
 
     public function __construct() {
 
@@ -32,37 +33,36 @@ class VueListeCree {
     }
 
     private function creationDeLaListe() {
-        $target_file = 'img/';
-        move_uploaded_file($_FILES["image"]["tmp_name"], $target_file . $_FILES["image"]["name"]);
-        $tokenGenerated = "";
-        if (isset($_POST['partager'])) {
+        if (isset($_POST['creer'])){
+          $target_file = 'img/';
+          move_uploaded_file($_FILES["image"]["tmp_name"], $target_file . $_FILES["image"]["name"]);
+          $tokenGenerated = "";
           $token = openssl_random_pseudo_bytes(32);
           $token = bin2hex($token);
           $tokenGenerated = $token;
-        }
 
-        $titre = $_POST['titre'];
-        $description = $_POST['description'];
-        $date =  $_POST['expiration'];
+          $this->titre = $_POST['titre'];
+          $this->description = $_POST['description'];
+          $this->date =  $_POST['expiration'];
 
-        $titre = filter_var($titre, FILTER_SANITIZE_SPECIAL_CHARS);
-        $description = filter_var($description, FILTER_SANITIZE_SPECIAL_CHARS);
-        $date = filter_var($date, FILTER_SANITIZE_SPECIAL_CHARS);
-        
+          $this->titre = filter_var($this->titre, FILTER_SANITIZE_SPECIAL_CHARS);
+          $this->description = filter_var($this->description, FILTER_SANITIZE_SPECIAL_CHARS);
+          $this->date = filter_var($this->date, FILTER_SANITIZE_SPECIAL_CHARS);
+          $this->image = $_FILES['image']['name'];
+          
           $l = new Liste();
-          $l->titre = $titre;
-          $l->description = $description;
-          $l->expiration = $date;
+          $l->titre = $this->titre;
+          $l->description = $this->description;
+          $l->expiration = $this->date;
           $l->user_id = null;
+          $l->token = $tokenGenerated;
           $res = $l->save();
+        }
+        print "Vous avez créé une liste de titre : " . $this->titre . ", de description : " . $this->description . ", de date d'expiration : " . $this->date . " et d'image : ";
+        echo '<img src="/ProjetMyWishList/ProjetMyWishList/wishlist/img/' . $this->image . '">';
 
-        print "Vous avez créé une liste de titre : " . $titre . ", de description : " . $description . ", de date d'expiration : " . $date . " et d'image : ";
-        echo '<img src="/ProjetMyWishList/ProjetMyWishList/wishlist/img/' . $_FILES['image']['name'] . '">';
-
-        echo "<form id='formulaireItem' method='POST' action=$this->url>
-            <button type='submit' name='partager'>Partager liste</button>
-            <textarea  name='urlToken' placeholder='Clef généré ici ...'>$tokenGenerated</textarea>
-            </form>";
+        echo "<h5>Token pour partager la liste</h5>
+        <textarea  name='urlToken'>$tokenGenerated</textarea>";
     }
 
     public function render() {

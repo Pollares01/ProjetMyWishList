@@ -11,8 +11,7 @@ class VueParticipant3
     private $app;
     private $liste, $typeAff, $urlAfficherToutesListes, $urlAfficherItemsListe, $urlITemID, $urlPageIndex, $urlCreerListe;
     private $URLbootstrapCSS, $URLbootstrapJS, $URLimages, $URLpersoCSS, $urlChangeImg;
-    protected $id;
-
+    
     public function __construct($tabItems, $typeAff) {
         $this->liste = $tabItems;
         $this->typeAff = $typeAff;

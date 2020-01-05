@@ -67,10 +67,6 @@ $app->post('/creer/liste', function () {
     FormulaireOKController::control();
 })->name('liste_cree');
 
-$app->post('/item/change/img', function() {
-    FormulaireOKController::control2();
-})->name('change_img');
-
 $app->post('/confirmation/ajout', function() {
     FormulaireOKController::control3();
 })->name('ajout_img');
