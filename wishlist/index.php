@@ -17,6 +17,22 @@ $db->bootEloquent();
 
 $app = new \Slim\Slim();
 
+$app->get('/liste/afficher/uneliste/:token', function($token){
+    ListeController::afficherUneListe($token);
+})->name('afficher_une_liste');
+
+$app->post('/liste/afficher/uneliste/:token', function($token){
+    ListeController::afficherUneListe($token);
+})->name('afficher_une_liste_post');
+
+$app->get('/liste/afficher/demande', function(){
+    ListeController::demanderListe();
+})->name('demander_une_liste');
+
+$app->post('/liste/afficher/demande', function(){
+    ListeController::demanderListe();
+})->name('demander_une_liste_post');
+
 $app->get('/liste/afficher', function (){
     ListeController::afficherListe();
 })->name('afficher_toutes_listes');

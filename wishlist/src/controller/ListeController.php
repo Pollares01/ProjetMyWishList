@@ -12,6 +12,16 @@ class ListeController
         $vue->render();
     }
 
+    public static function afficherUneListe($token){
+        $liste = Liste::where('token','=',$token)->first();
+        $vue = new VueParticipant3($liste,'AFFICHER_UNE_LISTE');
+        $vue->render();
+    }
+
+    public static function demanderListe(){
+        $vue = new VueParticipant3(null,'DEMANDER_UNE_LISTE');
+        $vue->render();
+    }
     public static function afficherItemDeListe($no)
     {
         $liste = Liste::where('no', '=', $no)->first();

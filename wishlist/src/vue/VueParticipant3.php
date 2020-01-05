@@ -2,6 +2,9 @@
 
 namespace wishlist\vue;
 
+use Slim\Router;
+use wishlist\modele\Liste;
+
 class VueParticipant3
 {
 
@@ -21,8 +24,6 @@ class VueParticipant3
         $itemUrl2 = $this->app->urlFor('afficher_items_dune_liste', ['no'=>1]) ;
         $this->urlAfficherItemsListe = $itemUrl2 ;
 
-        $this->urlITemID = $this->app->urlFor('afficher_item_id', ['id'=>5]);
-
         $this->urlPageIndex = $this->app->urlFor('page_index');
 
         $itemUrl4 = $this->app->urlFor('creer_liste');
@@ -34,6 +35,37 @@ class VueParticipant3
         $this->URLpersoCSS = $this->app->request->getRootUri() . '/public/css_perso.css';
     }
 
+    private function demandeUneListe(){
+        if (isset($_POST['demandeUneListe'])){
+            $token = $_POST['demandeUneListe'];
+            $request = Liste::select('no')->where('token', '=' , $token)->first();
+            if ($request != null){
+                $this->app->redirect($this->app->urlFor('afficher_une_liste_post',['token' => $token]));
+               //$url = $this->app->urlFor('afficher_une_liste_post',['token' => $token]);
+            }
+        }else{
+            $url = $this->app->urlFor('demander_une_liste');
+        }
+        $res = "
+            </br>
+            <form id='formulaireItem' method='POST' action=$url>
+                <input type='text' name='demandeUneListe' placeholder='Token De La Liste'>
+                <button type='submit' name='valider' value='valid_reserverItem'>Valider</button>
+            </form>";
+        return $res;
+    }
+    private function affichageUneListe(){
+        $lien = $this->app->urlFor('afficher_items_dune_liste', ['no' => $this->liste->no]);
+        $value = $this->liste;
+        $res = "</br>
+                                <a href=\"$lien\" class='text-black-50'>
+                                    <div class='affichageListe'>
+                                    $value->titre
+                                    </div>
+                                </a><br><br>
+                           ";
+        return $res;
+    }
     /**
      * Affiche toutes les listes dans un tableau
      * @return string
@@ -81,7 +113,7 @@ class VueParticipant3
         $_SESSION['idItemActuel'] = $this->liste->id;
         $nom = $this->liste->nom;
         $desc = $this->liste->descr;
-        $this->id = $this->liste->id;
+        $id = $this->liste->id;
         $tarif = $this->liste->tarif;
         $url = $this->app->urlFor('afficher_item_id_post',['id'=>$this->id]);
         $urlChangeImg = $this->app->urlFor('change_img');
@@ -178,6 +210,14 @@ class VueParticipant3
             }
             case 'ITEM_ID' : {
                 $content = $this->affichageItemID();
+                break;
+            }
+            case 'AFFICHER_UNE_LISTE' : {
+                $content = $this->affichageUneListe();
+                break;
+            }
+            case 'DEMANDER_UNE_LISTE' : {
+                $content = $this->demandeUneListe();
                 break;
             }
         }

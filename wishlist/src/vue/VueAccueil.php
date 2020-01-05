@@ -6,7 +6,7 @@ namespace wishlist\vue;
 
 class VueAccueil
 {
-    private $app,$URLbootstrapCSS,$URLbootstrapJS,$URLliste,$urlTousItem, $urlCSSperso, $urlPageIndex, $urlAfficherToutesListes,$urlITemID, $urlCreerListe;
+    private $app,$URLbootstrapCSS,$URLbootstrapJS,$URLliste,$urlTousItem, $urlCSSperso, $urlPageIndex, $urlAfficherToutesListes,$urlITemID, $urlCreerListe,$urlDemandeListe;
     public function __construct(){
         $this->app =  \Slim\Slim::getInstance();
 
@@ -14,9 +14,8 @@ class VueAccueil
 
         $this->urlPageIndex = $this->app->urlFor('page_index');
 
-        $this->urlITemID = $this->app->urlFor('afficher_item_id', ['id'=>5]);
-
         $this->urlCreerListe = $this->app->urlFor('creer_liste');
+        $this->urlDemandeListe = $this->app->urlFor('demander_une_liste');
 
         $this->urlCSSperso = $this->app->request->getRootUri() . '/public/css_perso.css';
         $this->URLbootstrapCSS = $this->app->request->getRootUri() . '/public/bootstrap.css';
@@ -48,7 +47,7 @@ class VueAccueil
                           <a class="nav-link" href="$this->urlPageIndex">Accueil</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="$this->urlAfficherToutesListes">Afficher la liste des listes
+                          <a class="nav-link" href="$this->urlDemandeListe">Afficher la liste des listes
                               </a>
                         </li>
                     <li class="nav-item">
