@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as DB;
 
 class VueListeCree {
     
-    private $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem, $urlITemID, $urlCreerListe, $urlPageIndex;
+    private $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem, $urlITemID, $urlCreerListe, $urlPageIndex, $url;
 
     public function __construct() {
 
@@ -28,12 +28,18 @@ class VueListeCree {
         $this->URLimages = $this->app->request->getRootUri() . '/img/';
         $this->URLbootstrapCSS = $this->app->request->getRootUri() . '/public/bootstrap.css';
         $this->URLbootstrapJS = $this->app->request->getRootUri() . '/public/boostrap.min.js';
-
+        $this->url = $this->app->urlFor('liste_cree');
     }
 
-    public function creationDeLaListe() {
+    private function creationDeLaListe() {
         $target_file = 'img/';
         move_uploaded_file($_FILES["image"]["tmp_name"], $target_file . $_FILES["image"]["name"]);
+        $tokenGenerated = "";
+        if (isset($_POST['partager'])) {
+          $token = openssl_random_pseudo_bytes(32);
+          $token = bin2hex($token);
+          $tokenGenerated = $token;
+        }
 
         $titre = $_POST['titre'];
         $description = $_POST['description'];
@@ -52,6 +58,11 @@ class VueListeCree {
 
         print "Vous avez créé une liste de titre : " . $titre . ", de description : " . $description . ", de date d'expiration : " . $date . " et d'image : ";
         echo '<img src="/ProjetMyWishList/ProjetMyWishList/wishlist/img/' . $_FILES['image']['name'] . '">';
+
+        echo "<form id='formulaireItem' method='POST' action=$this->url>
+            <button type='submit' name='partager'>Partager liste</button>
+            <textarea  name='urlToken' placeholder='Clef généré ici ...'>$tokenGenerated</textarea>
+            </form>";
     }
 
     public function render() {
@@ -92,6 +103,13 @@ class VueListeCree {
                   </div>
                 </nav>
                 </header>
+                <div class="container h-100">
+                    <div class="row h-100 align-items-center">
+                            <div class="col-12 text-center">
+                              
+                           </div>
+                    </div>
+                </div>
                 <script src="$this->URLbootstrapJS"></script>
             </body>
         </html> 
