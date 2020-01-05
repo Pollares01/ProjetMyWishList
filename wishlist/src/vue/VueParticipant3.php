@@ -95,13 +95,7 @@ class VueParticipant3
                 $messageSupOk = "L'image a bien été supprimée !";
             }
         }
-        //choix d'une image - fonctionnalité 11
-        if (isset($_POST['envoyer'])) {
-            //$target_file = 'img/';
-            //move_uploaded_file($_FILES["img"]["tmp_name"], $target_file . $_FILES["img"]["name"]);
-           // $this->liste->img = $_FILES['img']['name'];
-            //$this->liste->save();
-        }
+
         $lienVersImage = $this->URLimages . $this->liste->img;
        
         if (isset($_POST['participant']) && isset($_POST['messageParticipant'])) {
@@ -134,9 +128,6 @@ class VueParticipant3
                     <span class='border border-primary'>
                         <form method='POST' action=$url>
                             <button type='submit' name='deleteImg'>Supprimer</button>
-                            </form>
-                        <form method='POST' action=$urlChangeImg>
-                            <button type='submit' name='changeImg'>Changer</button>
                             </form>
                         <form method='POST' action=$urlAjoutImg enctype='multipart/form-data'>
                             <input type='file' accept='test.png' name='img' >

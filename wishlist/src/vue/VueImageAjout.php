@@ -33,14 +33,19 @@ class VueImageAjout {
     }
 
     private function deleteImg() {
-        echo "Ajout de l'image reussi !";
-        $target_file = 'img/';
-        move_uploaded_file($_FILES['img']["tmp_name"], $target_file . $_FILES['img']["name"]);
-        
-        $item = Item::where("id" , "=" , $_SESSION['idItemActuel'])->first();
-        $item->img=$_FILES['img']["name"];
-        $item->save();
-        echo '<img src="/ProjetMyWishList/ProjetMyWishList/wishlist/img/' . $_FILES['img']['name'] . '">';
+            //choix d'une image - fonctionnalité 11
+        if (isset($_POST['envoyer'])) {
+          $item = Item::where("id" , "=" , $_SESSION['idItemActuel'])->first();
+            if ($item->img == "") {
+            echo "Ajout de l'image reussi !";
+            $target_file = 'img/';
+            move_uploaded_file($_FILES['img']["tmp_name"], $target_file . $_FILES['img']["name"]);
+            
+            $item->img=$_FILES['img']["name"];
+            $item->save();
+            echo '<img src="/ProjetMyWishList/ProjetMyWishList/wishlist/img/' . $_FILES['img']['name'] . '">';
+            }
+        }
     }
 
     public function render() {
