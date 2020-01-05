@@ -47,7 +47,7 @@ class VueAccueil
                           <a class="nav-link" href="$this->urlPageIndex">Accueil</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="$this->urlDemandeListe">Afficher la liste des listes
+                          <a class="nav-link" href="$this->urlDemandeListe">Afficher une liste
                               </a>
                         </li>
                     <li class="nav-item">

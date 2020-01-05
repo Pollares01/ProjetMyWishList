@@ -5,7 +5,7 @@ use wishlist\modele\Item;
 
 class VueImageAjout {
     
-    private $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem, $urlITemID, $urlCreerListe, $urlPageIndex, $selecteur,$urlListeCree, $app;
+    private $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem, $urlITemID, $urlCreerListe, $urlPageIndex, $selecteur,$urlListeCree, $app, $urlDemandeListe;
 
     public function __construct() {
 
@@ -21,6 +21,8 @@ class VueImageAjout {
 
         $itemUrl4 = $this->app->urlFor('creer_liste');
         $this->urlCreerListe = $itemUrl4;
+
+        $this->urlDemandeListe = $this->app->urlFor('demander_une_liste');
 
         $this->urlPageIndex = $this->app->urlFor('page_index');
 
@@ -70,7 +72,7 @@ class VueImageAjout {
                           <a class="nav-link" href="$this->urlPageIndex">Accueil</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="$this->urlAfficherToutesListes">Afficher la liste des listes
+                          <a class="nav-link" href="$this->urlDemandeListe">Afficher une liste
                               </a>
                         </li>
                        <li class="nav-item">

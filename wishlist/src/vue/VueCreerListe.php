@@ -4,7 +4,7 @@ namespace wishlist\vue;
 
 class VueCreerListe {
     
-    private $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem, $urlITemID, $urlCreerListe, $urlPageIndex, $selecteur,$urlListeCree, $app;
+    private $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem, $urlITemID, $urlCreerListe, $urlPageIndex, $selecteur,$urlListeCree, $app, $urlDemandeListe;
 
     public function __construct() {
 
@@ -20,6 +20,8 @@ class VueCreerListe {
         $this->urlCreerListe = $itemUrl4;
 
         $this->urlPageIndex = $this->app->urlFor('page_index');
+
+        $this->urlDemandeListe = $this->app->urlFor('demander_une_liste');
 
         $this->URLimages = $this->app->request->getRootUri() . '/img/';
         $this->URLbootstrapCSS = $this->app->request->getRootUri() . '/public/bootstrap.css';
@@ -50,7 +52,7 @@ class VueCreerListe {
                           <a class="nav-link" href="$this->urlPageIndex">Accueil</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="$this->urlAfficherToutesListes">Afficher la liste des listes
+                          <a class="nav-link" href="$this->urlDemandeListe">Afficher une liste
                               </a>
                         </li>
                     <li class="nav-item">
