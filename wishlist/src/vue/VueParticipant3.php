@@ -24,7 +24,7 @@ class VueParticipant3
         $itemUrl2 = $this->app->urlFor('afficher_items_dune_liste', ['no'=>1]) ;
         $this->urlAfficherItemsListe = $itemUrl2 ;
 
-        $urlDemandeListe = $this->app->urlFor('demander_une_liste');
+        $this->urlDemandeListe = $this->app->urlFor('demander_une_liste');
 
         $this->urlPageIndex = $this->app->urlFor('page_index');
 
@@ -43,14 +43,15 @@ class VueParticipant3
             $request = Liste::select('no')->where('token', '=' , $token)->first();
             if ($request != null){
                 $this->app->redirect($this->app->urlFor('afficher_une_liste_post',['token' => $token]));
-               //$url = $this->app->urlFor('afficher_une_liste_post',['token' => $token]);
+            }else{
+                $url = $this->app->urlFor('demander_une_liste');
             }
         }else{
             $url = $this->app->urlFor('demander_une_liste');
         }
         $res = "
             </br>
-            <form id='formulaireItem' method='POST' action=$url>
+            <form id='formulaireListe' method='POST' action=$url>
                 <input type='text' name='demandeUneListe' placeholder='Token De La Liste'>
                 <button type='submit' name='valider' value='valid_reserverItem'>Valider</button>
             </form>";
@@ -59,12 +60,27 @@ class VueParticipant3
     private function affichageUneListe(){
         $lien = $this->app->urlFor('afficher_items_dune_liste', ['no' => $this->liste->no]);
         $value = $this->liste;
+        if(isset($_POST['demandeModifListe'])){
+            $tokenModif = $_POST['demandeModifListe'];
+            $request = Liste::select('no')->where('tokenModif','=',$tokenModif)->first();
+            if($request != null){
+                $this->app->redirect($this->app->urlFor('modifier_une_liste',['token'=>$tokenModif]));
+            }else{
+                $url = $this->app->urlFor('demander_une_liste');
+            }
+        }else{
+            $url = $this->app->urlFor('afficher_une_liste_post',['token'=>$value->token]);
+        }
         $res = "</br>
-                                <a href=\"$lien\" class='text-black-50'>
-                                    <div class='affichageListe'>
-                                    $value->titre
-                                    </div>
-                                </a><br><br>
+                <a href=\"$lien\" class='text-black-50'>
+                    <div class='affichageListe'>
+                    $value->titre
+                    </div>
+                </a></br>
+                <form id='formulaireModifListe' method='POST' action=$url>
+                    <input type='text' name='demandeModifListe' placeholder='Token de modification de la liste'>
+                    <button type='submit' name='valider' value='valid_modifierListe'>Valider</button>
+                </form>
                            ";
         return $res;
     }
@@ -238,6 +254,10 @@ class VueParticipant3
             }
             case 'DEMANDER_UNE_LISTE' : {
                 $content = $this->demandeUneListe();
+                break;
+            }
+            case 'MODIFIER_UNE_LISTE' : {
+                $content = $this->accederModifierListe();
                 break;
             }
         }
