@@ -3,68 +3,54 @@ namespace wishlist\vue;
 use wishlist\modele\Liste;
 use wishlist\modele\Item;
 use Illuminate\Database\Capsule\Manager as DB;
-
 class VueListeCree {
     
-    private $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem, $urlITemID, $urlCreerListe, $urlPageIndex, $url,$urlDemandeListe;
-
+    private $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem, $urlITemID, $urlCreerListe, $urlPageIndex, $url;
+    private $titre, $description, $date, $image;
     public function __construct() {
-
         $this->app =  \Slim\Slim::getInstance() ;
-
         $itemUrl1 =$this->app->urlFor('afficher_toutes_listes') ;
         $this->urlAfficherToutesListes = $itemUrl1 ;
-
         $itemUrl2 = $this->app->urlFor('afficher_items_dune_liste', ['no'=>1]) ;
         $this->urlAfficherItemsListe = $itemUrl2 ;
-
         $this->urlITemID = $this->app->urlFor('afficher_item_id', ['id'=>5]);
-
         $itemUrl4 = $this->app->urlFor('creer_liste');
         $this->urlCreerListe = $itemUrl4;
-
         $this->urlPageIndex = $this->app->urlFor('page_index');
-
         $this->URLimages = $this->app->request->getRootUri() . '/img/';
         $this->URLbootstrapCSS = $this->app->request->getRootUri() . '/public/bootstrap.css';
         $this->URLbootstrapJS = $this->app->request->getRootUri() . '/public/boostrap.min.js';
         $this->url = $this->app->urlFor('liste_cree');
     }
-
     private function creationDeLaListe() {
-        $target_file = 'img/';
-        move_uploaded_file($_FILES["image"]["tmp_name"], $target_file . $_FILES["image"]["name"]);
-        $tokenGenerated = "";
-        if (isset($_POST['partager'])) {
+        if (isset($_POST['creer'])){
+          $target_file = 'img/';
+          move_uploaded_file($_FILES["image"]["tmp_name"], $target_file . $_FILES["image"]["name"]);
+          $tokenGenerated = "";
           $token = openssl_random_pseudo_bytes(32);
           $token = bin2hex($token);
           $tokenGenerated = $token;
-        }
-
-        $titre = $_POST['titre'];
-        $description = $_POST['description'];
-        $date =  $_POST['expiration'];
-
-        $titre = filter_var($titre, FILTER_SANITIZE_SPECIAL_CHARS);
-        $description = filter_var($description, FILTER_SANITIZE_SPECIAL_CHARS);
-        $date = filter_var($date, FILTER_SANITIZE_SPECIAL_CHARS);
-        
+          $this->titre = $_POST['titre'];
+          $this->description = $_POST['description'];
+          $this->date =  $_POST['expiration'];
+          $this->titre = filter_var($this->titre, FILTER_SANITIZE_SPECIAL_CHARS);
+          $this->description = filter_var($this->description, FILTER_SANITIZE_SPECIAL_CHARS);
+          $this->date = filter_var($this->date, FILTER_SANITIZE_SPECIAL_CHARS);
+          $this->image = $_FILES['image']['name'];
+          
           $l = new Liste();
-          $l->titre = $titre;
-          $l->description = $description;
-          $l->expiration = $date;
+          $l->titre = $this->titre;
+          $l->description = $this->description;
+          $l->expiration = $this->date;
           $l->user_id = null;
+          $l->token = $tokenGenerated;
           $res = $l->save();
-
-        print "Vous avez créé une liste de titre : " . $titre . ", de description : " . $description . ", de date d'expiration : " . $date . " et d'image : ";
-        echo '<img src="/ProjetMyWishList/ProjetMyWishList/wishlist/img/' . $_FILES['image']['name'] . '">';
-
-        echo "<form id='formulaireItem' method='POST' action=$this->url>
-            <button type='submit' name='partager'>Partager liste</button>
-            <textarea  name='urlToken' placeholder='Clef généré ici ...'>$tokenGenerated</textarea>
-            </form>";
+        }
+        print "Vous avez créé une liste de titre : " . $this->titre . ", de description : " . $this->description . ", de date d'expiration : " . $this->date . " et d'image : ";
+        echo '<img src="/ProjetMyWishList/ProjetMyWishList/wishlist/img/' . $this->image . '">';
+        echo "<h5>Token pour partager la liste</h5>
+        <textarea  name='urlToken'>$tokenGenerated</textarea>";
     }
-
     public function render() {
         $html = <<<END
         <!DOCTYPE HTML>
@@ -118,4 +104,3 @@ class VueListeCree {
         $this->creationDeLaListe();
     }
 }
-
