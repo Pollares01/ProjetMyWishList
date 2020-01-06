@@ -2,6 +2,7 @@
 
 namespace wishlist\vue;
 
+use wishlist\modele\Item;
 use Slim\Router;
 use wishlist\modele\Liste;
 
@@ -111,6 +112,7 @@ class VueParticipant3
 
     private function affichageItemID()
     {
+        $lienVersImage = $this->URLimages . $this->liste->img;
         $_SESSION['idItemActuel'] = $this->liste->id;
         $nom = $this->liste->nom;
         $desc = $this->liste->descr;
@@ -127,8 +129,29 @@ class VueParticipant3
                 $messageSupOk = "L'image a bien été supprimée !";
             }
         }
+        $messageAjoutOk = "";
+        $messageImgWebOk = "";
+        if (isset($_POST['imgWeb'])){
+            $textImg = $_POST['textImgWeb'];
+            $textImg = filter_var($textImg, FILTER_SANITIZE_SPECIAL_CHARS);
+            $item = Item::where("id" , "=" , $_SESSION['idItemActuel'])->first();
+            $item->img = $item->nom;
+            $fichier = $_SERVER['DOCUMENT_ROOT'].'/ProjetMyWishList/wishlist/img/' . $item->nom . '.jpg';
+            copy($textImg, $fichier);
+            $item->save();
+            $messageImgWebOk =  "Ajout de l'image web réussi !";
+            $this->app->redirect($url);
+        }
 
-        $lienVersImage = $this->URLimages . $this->liste->img;
+        if (isset($_POST['envoyer'])) {
+            $item = Item::where("id" , "=" , $_SESSION['idItemActuel'])->first();
+              $target_file = 'img/';
+              move_uploaded_file($_FILES['img']["tmp_name"], $target_file . $_FILES['img']["name"]);
+              $item->img=$_FILES['img']["name"];
+              $item->save();
+              $messageAjoutOk =  "Ajout de l'image réussi !";
+              $this->app->redirect($url);
+          }
        
         if (isset($_POST['participant']) && isset($_POST['messageParticipant'])) {
             if (isset($_SESSION['participants']) && isset($_SESSION['messageParticipant'])){
@@ -161,7 +184,11 @@ class VueParticipant3
                         <form method='POST' action=$url>
                             <button type='submit' name='deleteImg'>Supprimer</button>
                             </form>
-                        <form method='POST' action=$urlAjoutImg enctype='multipart/form-data'>
+                            <form method='POST' action=$url>
+                            <input type='text' name ='textImgWeb' placeHolder='url ici !'>
+                            <button type='submit' name='imgWeb'>Ok</button>
+                            </form>
+                        <form method='POST' action=$url enctype='multipart/form-data'>
                             <input type='file' accept='test.png' name='img' >
                             <button type='submit' name='envoyer'>Envoyer</button>
                             </form>
@@ -178,6 +205,8 @@ class VueParticipant3
                             <textarea class='messageReservFormu' name='messageParticipant' placeholder='Un petit message ?'>$valeurMessage</textarea>
                           </form>
                           <p>$messageSupOk</p>
+                          <p>$messageAjoutOk</p>
+                          <p>$messageImgWebOk</p>
                     </span>
                     </div>";
         return $res;

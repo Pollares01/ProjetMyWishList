@@ -7,14 +7,11 @@
             <input type="file" name="photo">
             <input type="submit">
         </form>
-    <?php
-    if (isset($_FILES['photo']['tmp_name'])) {
-        $retour = copy($_FILES['photo']['tmp_name'], $_FILES['photo']['name']);
-        if($retour) {
-            echo '<p>La photo a bien été envoyée.</p>';
-            echo '<img src="' . $_FILES['photo']['name'] . '">';
-        }
-    }
-    ?>
+        <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/2d04bb6b-4e46-4236-bfbb-aeba05f80f79/ddnrbko-aa1d16ab-9cbd-44eb-9854-54112fb8acca.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzJkMDRiYjZiLTRlNDYtNDIzNi1iZmJiLWFlYmEwNWY4MGY3OVwvZGRucmJrby1hYTFkMTZhYi05Y2JkLTQ0ZWItOTg1NC01NDExMmZiOGFjY2EucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.bsdgZCE9Oie3qggdboNi0IqSCvVgUENeGVONUvC3RQE">
     </body>
 </html>
+
+<?php
+$url = 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/2d04bb6b-4e46-4236-bfbb-aeba05f80f79/ddnrbko-aa1d16ab-9cbd-44eb-9854-54112fb8acca.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzJkMDRiYjZiLTRlNDYtNDIzNi1iZmJiLWFlYmEwNWY4MGY3OVwvZGRucmJrby1hYTFkMTZhYi05Y2JkLTQ0ZWItOTg1NC01NDExMmZiOGFjY2EucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.bsdgZCE9Oie3qggdboNi0IqSCvVgUENeGVONUvC3RQE';
+$fichier = $_SERVER['DOCUMENT_ROOT'].'/ProjetMyWishList/wishlist/img/image_test.jpg';
+copy($url, $fichier);
