@@ -25,6 +25,10 @@ $app->post('/liste/afficher/uneliste/:token', function($token){
     ListeController::afficherUneListe($token);
 })->name('afficher_une_liste_post');
 
+$app->post('/liste/modifier/uneliste/:token', function($token){
+    ListeController::modifierUneListe($token);
+})->name('modifier_une_liste');
+
 $app->get('/liste/afficher/demande', function(){
     ListeController::demanderListe();
 })->name('demander_une_liste');
