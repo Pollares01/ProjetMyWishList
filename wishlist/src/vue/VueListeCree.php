@@ -31,6 +31,11 @@ class VueListeCree {
           $token = openssl_random_pseudo_bytes(32);
           $token = bin2hex($token);
           $tokenGenerated = $token;
+
+          $tokenModifGenerated = "";
+          $tokenModif = openssl_random_pseudo_bytes(32);
+          $tokenModif = bin2hex($token);
+          $tokenModifGenerated = $tokenModif;
           $this->titre = $_POST['titre'];
           $this->description = $_POST['description'];
           $this->date =  $_POST['expiration'];
@@ -45,12 +50,15 @@ class VueListeCree {
           $l->expiration = $this->date;
           $l->user_id = null;
           $l->token = $tokenGenerated;
+          $l->tokenModif = $tokenModifGenerated;
           $res = $l->save();
         }
         print "Vous avez créé une liste de titre : " . $this->titre . ", de description : " . $this->description . ", de date d'expiration : " . $this->date . " et d'image : ";
         echo '<img src="/ProjetMyWishList/ProjetMyWishList/wishlist/img/' . $this->image . '">';
         echo "<h5>Token pour partager la liste</h5>
         <textarea  name='urlToken'>$tokenGenerated</textarea>";
+        echo "<h5>Token pour modifier la liste</h5>
+        <textarea  name='urlToken'>$tokenModifGenerated</textarea>";
     }
     public function render() {
         $html = <<<END
