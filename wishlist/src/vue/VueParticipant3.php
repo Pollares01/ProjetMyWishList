@@ -23,6 +23,8 @@ class VueParticipant3
         $itemUrl2 = $this->app->urlFor('afficher_items_dune_liste', ['no'=>1]) ;
         $this->urlAfficherItemsListe = $itemUrl2 ;
 
+        $urlDemandeListe = $this->app->urlFor('demander_une_liste');
+
         $this->urlPageIndex = $this->app->urlFor('page_index');
 
         $itemUrl4 = $this->app->urlFor('creer_liste');
@@ -114,8 +116,7 @@ class VueParticipant3
         $desc = $this->liste->descr;
         $id = $this->liste->id;
         $tarif = $this->liste->tarif;
-        $url = $this->app->urlFor('afficher_item_id_post',['id'=>$this->id]);
-        $urlChangeImg = $this->app->urlFor('change_img');
+        $url = $this->app->urlFor('afficher_item_id_post',['id'=>$id]);
         $urlAjoutImg = $this->app->urlFor('ajout_img');
         //supression d'une image - fonctionnalité 13
         $messageSupOk = "";
@@ -144,11 +145,11 @@ class VueParticipant3
                 $_SESSION['participants'] = $tabReservItem;
             }
         }
-        if(isset($_SESSION['participants']) && isset($_SESSION['participants'][$this->id]) && isset($_SESSION['messageParticipant']) && isset($_SESSION['messageParticipant'][$this->id])) {
+        if(isset($_SESSION['participants']) && isset($_SESSION['participants'][$id]) && isset($_SESSION['messageParticipant']) && isset($_SESSION['messageParticipant'][$id])) {
             $tabReservItem = $_SESSION['participants'];
-            $valeurParticipant = $tabReservItem[$this->id];
+            $valeurParticipant = $tabReservItem[$id];
             $messageReservItem = $_SESSION['messageParticipant'];
-            $valeurMessage = $messageReservItem[$this->id];
+            $valeurMessage = $messageReservItem[$id];
         }else{
             $valeurParticipant = '';
             $valeurMessage = '';
@@ -235,7 +236,7 @@ class VueParticipant3
                           <a class="nav-link" href="$this->urlPageIndex">Accueil</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="$this->urlAfficherToutesListes">Afficher la liste des listes
+                          <a class="nav-link" href="$this->urlDemandeListe">Afficher une liste
                               </a>
                         </li>
                     <li class="nav-item">

@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as DB;
 class VueListeCree {
     
     private $urlAfficherToutesListes, $urlAfficherItemsListe, $urlTousItem, $urlITemID, $urlCreerListe, $urlPageIndex, $url;
-    private $titre, $description, $date, $image;
+    private $titre, $description, $date, $image, $urlDemandeListe;
     public function __construct() {
         $this->app =  \Slim\Slim::getInstance() ;
         $itemUrl1 =$this->app->urlFor('afficher_toutes_listes') ;
@@ -16,6 +16,7 @@ class VueListeCree {
         $this->urlITemID = $this->app->urlFor('afficher_item_id', ['id'=>5]);
         $itemUrl4 = $this->app->urlFor('creer_liste');
         $this->urlCreerListe = $itemUrl4;
+        $this->urlDemandeListe = $this->app->urlFor('demander_une_liste');
         $this->urlPageIndex = $this->app->urlFor('page_index');
         $this->URLimages = $this->app->request->getRootUri() . '/img/';
         $this->URLbootstrapCSS = $this->app->request->getRootUri() . '/public/bootstrap.css';
@@ -72,8 +73,7 @@ class VueListeCree {
                           <a class="nav-link" href="$this->urlPageIndex">Accueil</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="$this->urlAfficherToutesListes">Afficher la liste des listes
-                              </a>
+                          <a class="nav-link" href="$this->urlDemandeListe">Afficher une liste
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="$this->urlTousItem">Afficher la liste des items</a>
