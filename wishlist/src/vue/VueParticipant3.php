@@ -151,8 +151,8 @@ class VueParticipant3
             $textImg = $_POST['textImgWeb'];
             $textImg = filter_var($textImg, FILTER_SANITIZE_SPECIAL_CHARS);
             $item = Item::where("id" , "=" , $_SESSION['idItemActuel'])->first();
-            $item->img = $item->nom;
-            $fichier = $_SERVER['DOCUMENT_ROOT'].'/ProjetMyWishList/wishlist/img/' . $item->nom . '.jpg';
+            $item->img = 'imageWeb.jpg';
+            $fichier = $_SERVER['DOCUMENT_ROOT'].'/ProjetMyWishList/wishlist/img/imageWeb.jpg';
             copy($textImg, $fichier);
             $item->save();
             $messageImgWebOk =  "Ajout de l'image web réussi !";
