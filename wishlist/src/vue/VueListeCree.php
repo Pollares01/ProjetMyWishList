@@ -40,8 +40,11 @@ class VueListeCree {
           $this->description = $_POST['description'];
           $this->date =  $_POST['expiration'];
           $this->titre = filter_var($this->titre, FILTER_SANITIZE_SPECIAL_CHARS);
+          $this->titre = filter_var($this->titre, FILTER_SANITIZE_STRING);
           $this->description = filter_var($this->description, FILTER_SANITIZE_SPECIAL_CHARS);
+          $this->description = filter_var($this->description, FILTER_SANITIZE_STRING);
           $this->date = filter_var($this->date, FILTER_SANITIZE_SPECIAL_CHARS);
+          $this->date = filter_var($this->date, FILTER_SANITIZE_STRING);
           $this->image = $_FILES['image']['name'];
           
           $l = new Liste();
