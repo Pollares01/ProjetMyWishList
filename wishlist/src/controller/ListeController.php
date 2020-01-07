@@ -1,6 +1,8 @@
 <?php
 namespace wishlist\controller;
+use wishlist\modele\Item;
 use wishlist\modele\Liste;
+use wishlist\vue\VueAjoutItem;
 use wishlist\vue\VueParticipant3;
 use wishlist\vue\VueCreerListe;
 class ListeController
@@ -22,6 +24,7 @@ class ListeController
         $vue = new VueParticipant3(null,'DEMANDER_UNE_LISTE');
         $vue->render();
     }
+
     public static function afficherItemDeListe($no)
     {
         $liste = Liste::where('no', '=', $no)->first();
@@ -32,6 +35,20 @@ class ListeController
 
     public static function creerListe() {
         $vue = new VueCreerListe();
+        $vue->render();
+    }
+
+    public static function ajoutItem($no){
+        $item = new Item();
+        $item->nom = $_POST['nom'];
+        $item->descr = $_POST['desc'];
+        $item->tarif = $_POST['prix'];
+        if(!isset($_POST['url'])){
+            $item->url = $_POST['url'];
+        }
+        $item->liste_id = $no;
+        $item->save();
+        $vue = new VueAjoutItem("ajout");
         $vue->render();
     }
 }

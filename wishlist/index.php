@@ -75,4 +75,8 @@ $app->post('/confirmation/ajout', function() {
     FormulaireOKController::control3();
 })->name('ajout_img');
 
+$app->post('/ajout_item/:no', function($no){
+    ListeController::ajoutItem($no);
+})->name('ajouter_item_reussi');
+
 $app->run();
