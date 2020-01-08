@@ -125,6 +125,7 @@ class VueParticipant3 extends VuePrincipale
             $res = $this->liste->save();
             if ($res) {
                 $messageSupOk = "L'image a bien été supprimée !";
+                self::getApp()->redirect($url);
             }
         }
         $messageAjoutOk = "";
@@ -134,7 +135,9 @@ class VueParticipant3 extends VuePrincipale
             $textImg = filter_var($textImg, FILTER_SANITIZE_SPECIAL_CHARS);
             $item = Item::where("id" , "=" , $_SESSION['idItemActuel'])->first();
             $item->img = 'imageWeb.jpg';
-            $fichier = $_SERVER['DOCUMENT_ROOT'].'/ProjetMyWishList/wishlist/img/imageWeb.jpg';
+            $lienVersImageWeb = self::getURLimages() . '/imageWeb.jpg';
+            //$fichier = $_SERVER['DOCUMENT_ROOT'].'/ProjetMyWishList/ProjetMyWishList/wishlist/img/imageWeb.jpg';
+            $fichier = $_SERVER['DOCUMENT_ROOT']. $lienVersImageWeb;
             copy($textImg, $fichier);
             $item->save();
             $messageImgWebOk =  "Ajout de l'image web réussi !";
