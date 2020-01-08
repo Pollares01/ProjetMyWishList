@@ -43,7 +43,7 @@ class ListeController
         $item->nom = $_POST['nom'];
         $item->descr = $_POST['desc'];
         $item->tarif = $_POST['prix'];
-        if(!isset($_POST['url'])){
+        if(isset($_POST['url'])){
             $item->url = $_POST['url'];
         }
         $item->liste_id = $no;

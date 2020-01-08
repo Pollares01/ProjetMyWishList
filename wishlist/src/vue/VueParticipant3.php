@@ -58,13 +58,15 @@ class VueParticipant3 extends VuePrincipale
         $resultat = "";
         $this->nombreParticipants = 0;
         $l = $this->liste;
-        foreach ($_SESSION['participants'] as $key => $values) {
-            $item = Item::get();
-            foreach($item as $v) {
+        if (isset($_SESSION['participants'])){
+            foreach ($_SESSION['participants'] as $key => $values) {
+                $item = Item::get();
+                foreach ($item as $v) {
                     if ($v->liste_id == $l->no) {
-                    if ($v->id == $key) {
-                        $resultat =  $resultat . "<p>" . $values . "</p>";
-                        $this->nombreParticipants++;
+                        if ($v->id == $key) {
+                            $resultat = $resultat . "<p>" . $values . "</p>";
+                            $this->nombreParticipants++;
+                        }
                     }
                 }
             }
