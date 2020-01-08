@@ -46,10 +46,6 @@ class VueCreerListe extends VuePrincipale {
                            </div>
                        </div>
                            <div class="form-group">
-                           <label for="exampleFormControlFile1">Choisir une image depuis votre ordinateur</label>
-                           <input type="file" class="form-control-file" id="exampleFormControlFile1" accept="test.png" name="image">
-                           </div>
-                           <div class="form-group">
                                <div class="form-check">
                                <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" required>
                                <label class="form-check-label" for="invalidCheck3">
