@@ -10,6 +10,8 @@ class VueParticipant3 extends VuePrincipale
 
     private $liste, $typeAff;
     private  $urlDemandeListe;
+    private $nombreParticipants = 0;
+    private $nomsParticipants = array();
 
     public function __construct($tabItems, $typeAff) {
         parent::__construct();
@@ -53,6 +55,21 @@ class VueParticipant3 extends VuePrincipale
         }else{
             $url = self::getApp()->urlFor('afficher_une_liste_post',['token'=>$value->token]);
         }
+        $resultat = "";
+        $this->nombreParticipants = 0;
+        $l = $this->liste;
+        foreach ($_SESSION['participants'] as $key => $values) {
+            $item = Item::get();
+            foreach($item as $v) {
+                    if ($v->liste_id == $l->no) {
+                    if ($v->id == $key) {
+                        $resultat =  $resultat . "<p>" . $values . "</p>";
+                        $this->nombreParticipants++;
+                    }
+                }
+            }
+        }
+
         $res = "</br>
                 <a href=\"$lien\" class='text-black-50'>
                     <div class='affichageListe'>
@@ -63,6 +80,20 @@ class VueParticipant3 extends VuePrincipale
                     <input type='text' name='demandeModifListe' placeholder='Token de modification de la liste'>
                     <button type='submit' name='valider' value='valid_modifierListe'>Valider</button>
                 </form>
+                </br>
+                <h5>Nombre des participants à la liste</h5>
+                </br>
+                <div>
+                <p>$this->nombreParticipants</p>
+                </div>
+                </br>
+                </br>
+                <h5>Noms des participants à la liste</h5>
+                </br>
+                <div>
+                    $resultat
+                </div>
+                </br>
                            ";
         return $res;
     }
