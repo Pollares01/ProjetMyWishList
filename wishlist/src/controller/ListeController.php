@@ -45,7 +45,8 @@ class ListeController
         $vue->render();
     }
 
-    public static function ajoutItem($no){
+    public static function ajoutItem($tokenModif){
+        $liste = Liste::where('tokenModif','=',$tokenModif)->first();
         $item = new Item();
         $item->nom = $_POST['nom'];
         $item->descr = $_POST['desc'];
@@ -53,9 +54,9 @@ class ListeController
         if(isset($_POST['url'])){
             $item->url = $_POST['url'];
         }
-        $item->liste_id = $no;
+        $item->liste_id = $liste->no;
         $item->save();
-        $vue = new VueAjoutItem("ajout");
+        $vue = new VueModificationListe($liste);
         $vue->render();
     }
 

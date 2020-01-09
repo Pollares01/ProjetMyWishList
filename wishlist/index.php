@@ -78,8 +78,8 @@ $app->post('/confirmation/ajout', function() {
     FormulaireOKController::control3();
 })->name('ajout_img');
 
-$app->post('/ajout_item/:no', function($no){
-    ListeController::ajoutItem($no);
+$app->post('/ajout_item/:tokenModif', function($tokenModif){
+    ListeController::ajoutItem($tokenModif);
 })->name('ajouter_item_reussi');
 
 $app->run();
