@@ -50,7 +50,7 @@ class VueParticipant3 extends VuePrincipale
             if($request != null){
                 self::getApp()->redirect(self::getApp()->urlFor('modifier_une_liste',['token'=>$tokenModif]));
             }else{
-                $url = self::getApp()->urlFor('demander_une_liste');
+                $url = self::getApp()->urlFor('afficher_une_liste_post',['token'=>$value->token]);
             }
         }else{
             $url = self::getApp()->urlFor('afficher_une_liste_post',['token'=>$value->token]);
@@ -253,7 +253,6 @@ class VueParticipant3 extends VuePrincipale
         switch ($this->typeAff){
             //cas où l'on veut afficher toutes les listes
             case 'ALL_LISTE' : {
-
                 $content = $this->affichageToutListe();
                 break;
             }

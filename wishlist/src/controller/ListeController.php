@@ -3,6 +3,7 @@ namespace wishlist\controller;
 use wishlist\modele\Item;
 use wishlist\modele\Liste;
 use wishlist\vue\VueAjoutItem;
+use wishlist\vue\VueModificationListe;
 use wishlist\vue\VueParticipant3;
 use wishlist\vue\VueCreerListe;
 class ListeController
@@ -38,6 +39,12 @@ class ListeController
         $vue->render();
     }
 
+    public static function modifierUneListe($tokenModif){
+        $liste = Liste::where('tokenModif','=',$tokenModif)->first();
+        $vue = new VueModificationListe($liste);
+        $vue->render();
+    }
+
     public static function ajoutItem($no){
         $item = new Item();
         $item->nom = $_POST['nom'];
@@ -49,6 +56,16 @@ class ListeController
         $item->liste_id = $no;
         $item->save();
         $vue = new VueAjoutItem("ajout");
+        $vue->render();
+    }
+
+    public static function modificationListe($tokenModif){
+        $liste = Liste::where('tokenModif','=',$tokenModif)->first();
+        $liste->titre = $_POST['modifListe_titre'];
+        $liste->description = $_POST['modifListe_description'];
+        $liste->save();
+        $liste = Liste::where('tokenModif','=',$tokenModif)->first();
+        $vue = new VueModificationListe($liste);
         $vue->render();
     }
 }
