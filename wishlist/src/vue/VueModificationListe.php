@@ -16,9 +16,24 @@ class   VueModificationListe extends VuePrincipale{
 
     public function modificationListe(){
         if(isset($_POST['ajoutItem_Valider'])){
-            $txt = "Votre item est ajouté !";
+            $txtAjout = "<div class=\"alert alert-success alert-dismissible fade show\" role=\"alert\">
+  <strong>Trop bien !</strong> Votre item a été ajouté à votre liste !
+  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">
+    <span aria-hidden=\"true\">&times;</span>
+  </button>
+</div>";
         } else {
-            $txt = "fazfez";
+            $txtAjout = "";
+        }
+        if(isset($_POST['modif_valider'])){
+            $txtModif = "<div class=\"alert alert-success alert-dismissible fade show\" role=\"alert\">
+  <strong>Trop bien !</strong> Votre liste a été modifiée !
+  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">
+    <span aria-hidden=\"true\">&times;</span>
+  </button>
+</div>";
+        } else {
+            $txtModif = '';
         }
         $value = $this->liste;
         if($value !=null){
@@ -39,7 +54,7 @@ class   VueModificationListe extends VuePrincipale{
 <fieldset>
 <!-- Form Name -->
 <legend>Modification d'une liste</legend>
-
+$txtModif
 <!-- Textarea -->
 
 <div class=\"container\">
@@ -48,7 +63,7 @@ class   VueModificationListe extends VuePrincipale{
         <div class=\"form - group\">
   <label class=\"col - md - 4 control - label\" for=\"textarea\">Titre *</label>
   <div class=\"col - md - 4\">                     
-    <textarea class=\"form - control\" required id=\"textarea\" name=\"modifListe_titre\">$titre</textarea>
+    <textarea class=\"form-control\" required id=\"textarea\" name=\"modifListe_titre\">$titre</textarea>
   </div>
 </div>
 
@@ -56,9 +71,9 @@ class   VueModificationListe extends VuePrincipale{
 <div class=\"form - group\">
   <label class=\"col - md - 4 control - label\"  for=\"textarea\">Description : *</label>
   <div class=\"col - md - 4\">                     
-    <textarea class=\"form - control\" required id=\"textarea\" name=\"modifListe_description\">$description</textarea>
+    <textarea class=\"form-control\" required id=\"textarea\" name=\"modifListe_description\">$description</textarea>
     <BR>
-    <button type='submit' name='valider'>Valider</button>
+    <button class='btn btn-primary' type='submit' name='modif_valider'>Valider</button>
   </div>
 </div>
 </fieldset>
@@ -69,15 +84,16 @@ class   VueModificationListe extends VuePrincipale{
       <legend>
                                     Ajout d'items !
                                 </legend>
+    $txtAjout
                                 
                                 <form id=\"myForm\" method=\"post\" action=\"$lien2\" >
-	<br>Nom *<br><input name=\"nom\" id=\"text1\" type=\"text\" required placeholder=\"Item personnalisé\" >
-	<br>Description *<br><textarea name=\"desc\" id=\"textarea2\" cols=\"18\" rows=\"5\" required placeholder=\"Une rapide description\" ></textarea>
-	<br>Prix *<br><input name=\"prix\" id=\"text3\" type=\"number\" required placeholder=\"15€\" >
-	<br>Lien vers cet item<br><input name=\"url\" id=\"url4\" type=\"url\" >
-	<br><br><input name=\"ajoutItem_Valider\" type=\"submit\" value=\"Valider\" >
+	<br>Nom *<br><input class='form-control' name=\"nom\" id=\"text1\" type=\"text\" required placeholder=\"Item personnalisé\" >
+	<br>Description *<br><textarea class='form-control' name=\"desc\" id=\"textarea2\" cols=\"18\" rows=\"5\" required placeholder=\"Une rapide description\" ></textarea>
+	<br>Prix *<br><input class='form-control' name=\"prix\" id=\"text3\" type=\"number\" required placeholder=\"15€\" >
+	<br>Lien vers cet item<br><input class='form-control' name=\"url\" id=\"url4\" type=\"url\" >
+	<br><br><input class='btn btn-primary' name=\"ajoutItem_Valider\" type=\"submit\" value=\"Valider\" >
 </form>
-$txt
+
     </div>
   </div>
 </div>
