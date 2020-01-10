@@ -22,21 +22,18 @@ class ListeController
         $nombreParticipants = 0;
         $l = $liste;
         $dateCourante = date("Y") . "-" . date("m") ."-" . date("d") ;
-        if (isset($_SESSION['participants'])){
-            foreach ($_SESSION['participants'] as $key => $values) {
                 $item = Item::get();
                 foreach ($item as $v) {
                     if ($v->liste_id == $l->no) {
-                        if ($v->id == $key) {
-                            if ($l->expiration <= $dateCourante) {
-                            $resultat = $resultat . "<li>" . $values . "</li>";                           
-                            }
+                            if ($v->participant != "") {
+                                $resultat = $resultat . "<li>" . $v->participant . "</li>" ;                  
+                               if ($v->messageParticipant != "") {
+                                    $resultat = $resultat . "Message : " .  $v->messageParticipant . "</br>";  ;
+                                }
                             $nombreParticipants++;
-                        }
+                            }
                     }
                 }
-            }
-        }
         $vue = new VueParticipant3($liste,$nombreParticipants,$resultat,'AFFICHER_UNE_LISTE');
         $vue->render();
     }
