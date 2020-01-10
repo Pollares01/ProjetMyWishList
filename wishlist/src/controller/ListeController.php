@@ -63,14 +63,31 @@ class ListeController
     }
 
     public static function ajoutItem($tokenModif){
+
+
         $liste = Liste::where('tokenModif','=',$tokenModif)->first();
         $item = new Item();
-        $item->nom = $_POST['nom'];
-        $item->descr = $_POST['desc'];
-        $item->tarif = $_POST['prix'];
+
+        $nom = $_POST['nom'];
+        $nom = filter_var($nom, FILTER_SANITIZE_SPECIAL_CHARS	);
+        $nom = filter_var($nom, FILTER_SANITIZE_STRING);
+        $item->nom = $nom;
+
+        $desc =  $_POST['desc'];
+        $desc= filter_var($desc, FILTER_SANITIZE_SPECIAL_CHARS);
+        $desc = filter_var($desc, FILTER_SANITIZE_STRING);
+        $item->descr = $desc;
+
+        $tarif = $_POST['prix'];
+        $tarif = filter_var($tarif, FILTER_SANITIZE_NUMBER_FLOAT);
+        $item->tarif = $tarif;
+
         if(isset($_POST['url'])){
-            $item->url = $_POST['url'];
+            $url = $_POST['url'];
+            $url = filter_var($url, FILTER_SANITIZE_URL);
+            $item->url = $url;
         }
+
         $item->liste_id = $liste->no;
         $item->save();
         $vue = new VueModificationListe($liste);
@@ -78,12 +95,22 @@ class ListeController
     }
 
     public static function modificationListe($tokenModif){
+
+
         $liste = Liste::where('tokenModif','=',$tokenModif)->first();
-        $liste->titre = $_POST['modifListe_titre'];
-        $liste->description = $_POST['modifListe_description'];
+        $titre = $_POST['modifListe_titre'];
+        $titre= filter_var($titre, FILTER_SANITIZE_SPECIAL_CHARS);
+        $titre = filter_var($titre, FILTER_SANITIZE_STRING);
+        $liste->titre = $titre;
+
+        $liste =  $_POST['modifListe_description'];
+        $liste= filter_var($liste, FILTER_SANITIZE_SPECIAL_CHARS);
+        $liste = filter_var($liste, FILTER_SANITIZE_STRING);
+        $liste->description = $liste;
         $liste->save();
         $liste = Liste::where('tokenModif','=',$tokenModif)->first();
         $vue = new VueModificationListe($liste);
         $vue->render();
     }
+
 }
