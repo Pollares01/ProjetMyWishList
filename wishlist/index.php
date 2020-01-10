@@ -25,9 +25,13 @@ $app->post('/liste/afficher/uneliste/:token', function($token){
     ListeController::afficherUneListe($token);
 })->name('afficher_une_liste_post');
 
-$app->post('/liste/modifier/uneliste/:token', function($token){
-    ListeController::modifierUneListe($token);
+$app->get('/liste/modifier/uneliste/:token', function($tokenModif){
+    ListeController::modifierUneListe($tokenModif);
 })->name('modifier_une_liste');
+
+$app->post('/liste/modifier/informationsListe/:tokenModif', function($tokenModif){
+    Listecontroller::modificationListe($tokenModif);
+})->name('modification_une_liste');
 
 $app->get('/liste/afficher/demande', function(){
     ListeController::demanderListe();
@@ -66,7 +70,6 @@ $app->get('/', function () {
     \wishlist\controller\IndexController::interfaceListe();
 })->name('page_index');
 
-
 $app->post('/creer/liste', function () {
     FormulaireOKController::control();
 })->name('liste_cree');
@@ -74,5 +77,9 @@ $app->post('/creer/liste', function () {
 $app->post('/confirmation/ajout', function() {
     FormulaireOKController::control3();
 })->name('ajout_img');
+
+$app->post('/ajout_item/:tokenModif', function($tokenModif){
+    ListeController::ajoutItem($tokenModif);
+})->name('ajouter_item_reussi');
 
 $app->run();

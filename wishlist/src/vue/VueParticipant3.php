@@ -3,38 +3,22 @@
 namespace wishlist\vue;
 
 use wishlist\modele\Item;
-use Slim\Router;
 use wishlist\modele\Liste;
 
-class VueParticipant3
+class VueParticipant3 extends VuePrincipale
 {
 
-    private $app;
-    private $liste, $typeAff, $urlAfficherToutesListes, $urlAfficherItemsListe, $urlITemID, $urlPageIndex, $urlCreerListe;
-    private $URLbootstrapCSS, $URLbootstrapJS, $URLimages, $URLpersoCSS, $urlChangeImg, $urlDemandeListe;
+    private $liste, $typeAff;
+    private  $urlDemandeListe;
+    private $nombreParticipants = 0;
+    private $nomsParticipants = array();
 
     public function __construct($tabItems, $typeAff) {
+        parent::__construct();
         $this->liste = $tabItems;
         $this->typeAff = $typeAff;
-        $this->app =  \Slim\Slim::getInstance() ;
 
-        $itemUrl1 =$this->app->urlFor('afficher_toutes_listes') ;
-        $this->urlAfficherToutesListes = $itemUrl1 ;
-
-        $itemUrl2 = $this->app->urlFor('afficher_items_dune_liste', ['no'=>1]) ;
-        $this->urlAfficherItemsListe = $itemUrl2 ;
-
-        $this->urlDemandeListe = $this->app->urlFor('demander_une_liste');
-
-        $this->urlPageIndex = $this->app->urlFor('page_index');
-
-        $itemUrl4 = $this->app->urlFor('creer_liste');
-        $this->urlCreerListe = $itemUrl4;
-
-        $this->URLimages = $this->app->request->getRootUri() . '/img/';
-        $this->URLbootstrapCSS = $this->app->request->getRootUri() . '/public/bootstrap.css';
-        $this->URLbootstrapJS = $this->app->request->getRootUri() . '/public/boostrap.min.js';
-        $this->URLpersoCSS = $this->app->request->getRootUri() . '/public/css_perso.css';
+        $this->urlDemandeListe = self::getApp()->urlFor('demander_une_liste');
     }
 
     private function demandeUneListe(){
@@ -42,14 +26,16 @@ class VueParticipant3
             $token = $_POST['demandeUneListe'];
             $request = Liste::select('no')->where('token', '=' , $token)->first();
             if ($request != null){
-                $this->app->redirect($this->app->urlFor('afficher_une_liste_post',['token' => $token]));
+                self::getApp()->redirect(self::getApp()->urlFor('afficher_une_liste_post',['token' => $token]));
             }else{
-                $url = $this->app->urlFor('demander_une_liste');
+                $url = self::getApp()->urlFor('demander_une_liste');
             }
         }else{
-            $url = $this->app->urlFor('demander_une_liste');
+            $url = self::getApp()->urlFor('demander_une_liste');
         }
         $res = "
+            </br>
+            <h1>Veuillez entrer le Token de la liste voulue :</h1>
             </br>
             <form id='formulaireListe' method='POST' action=$url>
                 <input type='text' name='demandeUneListe' placeholder='Token De La Liste'>
@@ -58,29 +44,61 @@ class VueParticipant3
         return $res;
     }
     private function affichageUneListe(){
-        $lien = $this->app->urlFor('afficher_items_dune_liste', ['no' => $this->liste->no]);
+        $lien = self::getApp()->urlFor('afficher_items_dune_liste', ['no' => $this->liste->no]);
         $value = $this->liste;
         if(isset($_POST['demandeModifListe'])){
             $tokenModif = $_POST['demandeModifListe'];
             $request = Liste::select('no')->where('tokenModif','=',$tokenModif)->first();
             if($request != null){
-                $this->app->redirect($this->app->urlFor('modifier_une_liste',['token'=>$tokenModif]));
+                self::getApp()->redirect(self::getApp()->urlFor('modifier_une_liste',['token'=>$tokenModif]));
             }else{
-                $url = $this->app->urlFor('demander_une_liste');
+                $url = self::getApp()->urlFor('afficher_une_liste_post',['token'=>$value->token]);
             }
         }else{
-            $url = $this->app->urlFor('afficher_une_liste_post',['token'=>$value->token]);
+            $url = self::getApp()->urlFor('afficher_une_liste_post',['token'=>$value->token]);
         }
+        $resultat = "";
+        $this->nombreParticipants = 0;
+        $l = $this->liste;
+        if (isset($_SESSION['participants'])){
+            foreach ($_SESSION['participants'] as $key => $values) {
+                $item = Item::get();
+                foreach ($item as $v) {
+                    if ($v->liste_id == $l->no) {
+                        if ($v->id == $key) {
+                            $resultat = $resultat . "<p>" . $values . "</p>";
+                            $this->nombreParticipants++;
+                        }
+                    }
+                }
+            }
+        }
+
         $res = "</br>
                 <a href=\"$lien\" class='text-black-50'>
                     <div class='affichageListe'>
                     $value->titre
                     </div>
                 </a></br>
+                <p>En rentrant le Token de modification de cette liste vous pourrez modifier ses informations générales ainsi qu'ajouter un item.</p>
                 <form id='formulaireModifListe' method='POST' action=$url>
                     <input type='text' name='demandeModifListe' placeholder='Token de modification de la liste'>
                     <button type='submit' name='valider' value='valid_modifierListe'>Valider</button>
                 </form>
+                </br>
+                <h5>Nombre des participants à la liste</h5>
+                </br>
+                <div>
+                <p>$this->nombreParticipants</p>
+                </div>
+                </br>
+                </br>
+                <h5>Noms des participants à la liste</h5>
+                </br>
+                <div>
+                    $resultat
+                </div>
+                </br>
                            ";
         return $res;
     }
@@ -91,7 +109,7 @@ class VueParticipant3
     private function affichageToutListe() {
         $res = '';
         foreach ($this->liste as $value){
-            $lien = $this->app->urlFor('afficher_items_dune_liste', ['no' => $value->no]);
+            $lien = self::getApp()->urlFor('afficher_items_dune_liste', ['no' => $value->no]);
             $res = $res . "
                                 <a href=\"$lien\" class='text-black-50'>
                                     <div class='affichageListe'>
@@ -111,7 +129,7 @@ class VueParticipant3
     private function affichageItemsDeListe(){
         $res ='<section>';
         foreach ($this->liste as $value){
-            $lien = $this->app->urlFor('afficher_item_id', ['id' => $value->id]);
+            $lien = self::getApp()->urlFor('afficher_item_id', ['id' => $value->id]);
             $res = $res . "
                                     <div class='bg-light shadow'>
                                     <a href=\"$lien\" class='text-black-50'>
@@ -128,14 +146,14 @@ class VueParticipant3
 
     private function affichageItemID()
     {
-        $lienVersImage = $this->URLimages . $this->liste->img;
+        $lienVersImage = self::getURLimages() . $this->liste->img;
         $_SESSION['idItemActuel'] = $this->liste->id;
         $nom = $this->liste->nom;
         $desc = $this->liste->descr;
         $id = $this->liste->id;
         $tarif = $this->liste->tarif;
-        $url = $this->app->urlFor('afficher_item_id_post',['id'=>$id]);
-        $urlAjoutImg = $this->app->urlFor('ajout_img');
+        $url = self::getApp()->urlFor('afficher_item_id_post',['id'=>$id]);
+        $urlAjoutImg = self::getApp()->urlFor('ajout_img');
         //supression d'une image - fonctionnalité 13
         $messageSupOk = "";
         if (isset($_POST['deleteImg'])) {
@@ -143,7 +161,11 @@ class VueParticipant3
             $res = $this->liste->save();
             if ($res) {
                 $messageSupOk = "L'image a bien été supprimée !";
+<<<<<<< HEAD
                 $this->app->redirect($url);
+=======
+                self::getApp()->redirect($url);
+>>>>>>> ff5c2ad8717a574c8769b71a9e8c90e9fd70352c
             }
         }
         $messageAjoutOk = "";
@@ -154,12 +176,18 @@ class VueParticipant3
             if ($textImg != "") {
             $item = Item::where("id" , "=" , $_SESSION['idItemActuel'])->first();
             $item->img = 'imageWeb.jpg';
-            $fichier = $_SERVER['DOCUMENT_ROOT'].'/ProjetMyWishList/wishlist/img/imageWeb.jpg';
+            $lienVersImageWeb = self::getURLimages() . '/imageWeb.jpg';
+            //$fichier = $_SERVER['DOCUMENT_ROOT'].'/ProjetMyWishList/ProjetMyWishList/wishlist/img/imageWeb.jpg';
+            $fichier = $_SERVER['DOCUMENT_ROOT']. $lienVersImageWeb;
             copy($textImg, $fichier);
             $item->save();
             $messageImgWebOk =  "Ajout de l'image web réussi !";
+<<<<<<< HEAD
             $this->app->redirect($url);
             }
+=======
+            self::getApp()->redirect($url);
+>>>>>>> ff5c2ad8717a574c8769b71a9e8c90e9fd70352c
         }
 
         if (isset($_POST['envoyer'])) {
@@ -169,7 +197,7 @@ class VueParticipant3
               $item->img=$_FILES['img']["name"];
               $item->save();
               $messageAjoutOk =  "Ajout de l'image réussi !";
-              $this->app->redirect($url);
+              self::getApp()->redirect($url);
           }
        
         if (isset($_POST['participant']) && isset($_POST['messageParticipant'])) {
@@ -238,7 +266,6 @@ class VueParticipant3
         switch ($this->typeAff){
             //cas où l'on veut afficher toutes les listes
             case 'ALL_LISTE' : {
-
                 $content = $this->affichageToutListe();
                 break;
             }
@@ -264,52 +291,23 @@ class VueParticipant3
                 break;
             }
         }
-        $html = <<<END
-        <!DOCTYPE HTML>
-        <html>
-            <head>
-                <link rel="stylesheet" href="$this->URLbootstrapCSS">
-                <link rel="stylesheet" href="$this->URLpersoCSS">
-                <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-            </head>
-            <body>
-                <header>
-                <nav class="navbar navbar-expand-lg navbar-light bg-light shadow    ">
-                  <div class="container">
-                    <a class="navbar-brand" href="$this->urlPageIndex">My Wish List</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                          <span class="navbar-toggler-icon"></span>
-                        </button>
-                    <div class="collapse navbar-collapse" id="navbarResponsive">
-                      <ul class="navbar-nav ml-auto">
-                      <li class="nav-item">
-                          <a class="nav-link" href="$this->urlPageIndex">Accueil</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="$this->urlDemandeListe">Afficher une liste
-                              </a>
-                        </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="$this->urlCreerListe">Creer une liste de souhait</a>
-                  </li>
-                      </ul>
-                    </div>
-                  </div>
-                </nav>
-                </header>
-                <div class="container h-100">
-                    <div class="row h-100 align-items-center">
-                           <div class="col-12 text-center">
+
+        $menu = self::getMenu();
+        $footer = self::getFooter();
+        $html = "
+              $menu
+                <div class=\"container h-100\">
+                    <div class=\"row h-100 align-items-center\">
+                           <div class=\"col-12 text-center\">
                                 $content
                            </div>
                     </div>
                 </div>
-                <script src="$this->URLbootstrapJS"></script>
-            </body>
-        </html> 
-        END ;
+              $footer";
+
+
+
+
         echo $html;
     }
 }
