@@ -143,6 +143,7 @@ class VueParticipant3
             $res = $this->liste->save();
             if ($res) {
                 $messageSupOk = "L'image a bien été supprimée !";
+                $this->app->redirect($url);
             }
         }
         $messageAjoutOk = "";
@@ -150,6 +151,7 @@ class VueParticipant3
         if (isset($_POST['imgWeb'])){
             $textImg = $_POST['textImgWeb'];
             $textImg = filter_var($textImg, FILTER_SANITIZE_SPECIAL_CHARS);
+            if ($textImg != "") {
             $item = Item::where("id" , "=" , $_SESSION['idItemActuel'])->first();
             $item->img = 'imageWeb.jpg';
             $fichier = $_SERVER['DOCUMENT_ROOT'].'/ProjetMyWishList/wishlist/img/imageWeb.jpg';
@@ -157,6 +159,7 @@ class VueParticipant3
             $item->save();
             $messageImgWebOk =  "Ajout de l'image web réussi !";
             $this->app->redirect($url);
+            }
         }
 
         if (isset($_POST['envoyer'])) {
