@@ -77,7 +77,7 @@ END;
     /**
      * @return Slim|null
      */
-    public function getApp(): ?Slim
+    public function getApp()
     {
         return $this->app;
     }
