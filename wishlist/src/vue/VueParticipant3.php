@@ -161,11 +161,8 @@ class VueParticipant3 extends VuePrincipale
             $res = $this->liste->save();
             if ($res) {
                 $messageSupOk = "L'image a bien été supprimée !";
-<<<<<<< HEAD
                 $this->app->redirect($url);
-=======
                 self::getApp()->redirect($url);
->>>>>>> ff5c2ad8717a574c8769b71a9e8c90e9fd70352c
             }
         }
         $messageAjoutOk = "";
@@ -182,12 +179,9 @@ class VueParticipant3 extends VuePrincipale
             copy($textImg, $fichier);
             $item->save();
             $messageImgWebOk =  "Ajout de l'image web réussi !";
-<<<<<<< HEAD
             $this->app->redirect($url);
             }
-=======
             self::getApp()->redirect($url);
->>>>>>> ff5c2ad8717a574c8769b71a9e8c90e9fd70352c
         }
 
         if (isset($_POST['envoyer'])) {
