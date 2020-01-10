@@ -62,7 +62,7 @@ class VueCreerListe extends VuePrincipale {
                     </div>
                 </div>
                 $foot
-        END ;
+END;
         echo $html;
     }
 }

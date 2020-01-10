@@ -64,7 +64,7 @@ class VuePrincipale
                   </div>
                 </nav>
                 </header>
-        END;
+END;
     }
 
     protected function getFooter()

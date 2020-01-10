@@ -21,7 +21,7 @@ class VueListeCree extends VuePrincipale {
         <textarea  name='urlToken'>$tokenGenerated</textarea>
         <h5>Token pour modifier la liste</h5>
         <textarea  name='urlToken'>$tokenModifGenerated</textarea>
-        END;
+END;
     }
 
 
@@ -38,7 +38,7 @@ class VueListeCree extends VuePrincipale {
                     </div>
                 </div>
                 $footer
-        END ;    
+END ;
         echo $html;
         $this->creationDeLaListe();
     }
