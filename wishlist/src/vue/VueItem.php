@@ -39,6 +39,7 @@ class VueItem extends VuePrincipale{
         $messageImgWebOk = "";
         if (isset($_POST['imgWeb'])){
             $textImg = $_POST['textImgWeb'];
+            if ($textImg != "") {
             $textImg = filter_var($textImg, FILTER_SANITIZE_SPECIAL_CHARS);
             $item = Item::where("id" , "=" , $_SESSION['idItemActuel'])->first();
             $item->img = 'imageWeb.jpg';
@@ -49,6 +50,7 @@ class VueItem extends VuePrincipale{
             $item->save();
             $messageImgWebOk =  "Ajout de l'image web réussi !";
             self::getApp()->redirect($url);
+            }
         }
 
         if (isset($_POST['envoyer'])) {
