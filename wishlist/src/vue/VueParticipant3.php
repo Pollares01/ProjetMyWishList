@@ -12,12 +12,14 @@ class VueParticipant3 extends VuePrincipale
     private  $urlDemandeListe;
     private $nombreParticipants = 0;
     private $nomsParticipants = array();
+    private $resultat;
 
-    public function __construct($tabItems, $typeAff) {
+    public function __construct($tabItems, $nombreP,$resultat,$typeAff) {
         parent::__construct();
         $this->liste = $tabItems;
         $this->typeAff = $typeAff;
-
+        $this->nombreParticipants = $nombreP;
+        $this->resultat = $resultat;
         $this->urlDemandeListe = self::getApp()->urlFor('demander_une_liste');
     }
 
@@ -44,40 +46,24 @@ class VueParticipant3 extends VuePrincipale
         return $res;
     }
     private function affichageUneListe(){
+        $titre =  $this->liste->titre;
         $lien = self::getApp()->urlFor('afficher_items_dune_liste', ['no' => $this->liste->no]);
-        $value = $this->liste;
         if(isset($_POST['demandeModifListe'])){
             $tokenModif = $_POST['demandeModifListe'];
             $request = Liste::select('no')->where('tokenModif','=',$tokenModif)->first();
             if($request != null){
                 self::getApp()->redirect(self::getApp()->urlFor('modifier_une_liste',['token'=>$tokenModif]));
             }else{
-                $url = self::getApp()->urlFor('afficher_une_liste_post',['token'=>$value->token]);
+                $url = self::getApp()->urlFor('afficher_une_liste_post',['token'=>$this->liste->token]);
             }
         }else{
-            $url = self::getApp()->urlFor('afficher_une_liste_post',['token'=>$value->token]);
+            $url = self::getApp()->urlFor('afficher_une_liste_post',['token'=>$this->liste->token]);
         }
-        $resultat = "";
-        $this->nombreParticipants = 0;
-        $l = $this->liste;
-        if (isset($_SESSION['participants'])){
-            foreach ($_SESSION['participants'] as $key => $values) {
-                $item = Item::get();
-                foreach ($item as $v) {
-                    if ($v->liste_id == $l->no) {
-                        if ($v->id == $key) {
-                            $resultat = $resultat . "<p>" . $values . "</p>";
-                            $this->nombreParticipants++;
-                        }
-                    }
-                }
-            }
-        }
-
-        $res = "</br>
-                <a href=\"$lien\" class='text-black-50'>
+        $res = <<<END
+                </br>
+                <a href="$lien" class='text-black-50'>
                     <div class='affichageListe'>
-                    $value->titre
+                        $titre
                     </div>
                 </a></br>
                 <p>En rentrant le Token de modification de cette liste vous pourrez modifier ses informations générales ainsi qu'ajouter un item.</p>
@@ -96,10 +82,10 @@ class VueParticipant3 extends VuePrincipale
                 <h5>Noms des participants à la liste</h5>
                 </br>
                 <div>
-                    $resultat
+                    $this->resultat
                 </div>
                 </br>
-                           ";
+END;
         return $res;
     }
     /**

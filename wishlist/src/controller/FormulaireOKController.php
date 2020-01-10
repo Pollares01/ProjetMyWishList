@@ -21,7 +21,7 @@ class FormulaireOKController
   
             $tokenModifGenerated = "";
             $tokenModif = openssl_random_pseudo_bytes(32);
-            $tokenModif = bin2hex($token);
+            $tokenModif = bin2hex($tokenModif);
             $tokenModifGenerated = $tokenModif;
             $titre = $_POST['titre'];
             $description = $_POST['description'];

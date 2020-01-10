@@ -17,12 +17,32 @@ class ListeController
 
     public static function afficherUneListe($token){
         $liste = Liste::where('token','=',$token)->first();
-        $vue = new VueParticipant3($liste,'AFFICHER_UNE_LISTE');
+        $value = $liste;
+        $resultat = "";
+        $nombreParticipants = 0;
+        $l = $liste;
+        $dateCourante = date("Y") . "-" . date("m") ."-" . date("d") ;
+        if (isset($_SESSION['participants'])){
+            foreach ($_SESSION['participants'] as $key => $values) {
+                $item = Item::get();
+                foreach ($item as $v) {
+                    if ($v->liste_id == $l->no) {
+                        if ($v->id == $key) {
+                            if ($l->expiration <= $dateCourante) {
+                            $resultat = $resultat . "<li>" . $values . "</li>";                           
+                            }
+                            $nombreParticipants++;
+                        }
+                    }
+                }
+            }
+        }
+        $vue = new VueParticipant3($liste,$nombreParticipants,$resultat,'AFFICHER_UNE_LISTE');
         $vue->render();
     }
 
     public static function demanderListe(){
-        $vue = new VueParticipant3(null,'DEMANDER_UNE_LISTE');
+        $vue = new VueParticipant3(null,null,null,'DEMANDER_UNE_LISTE');
         $vue->render();
     }
 
@@ -30,7 +50,7 @@ class ListeController
     {
         $liste = Liste::where('no', '=', $no)->first();
         $item = $liste->items()->get();
-        $vue = new VueParticipant3($item, 'ITEM_LISTE');
+        $vue = new VueParticipant3($item,null,null, 'ITEM_LISTE');
         $vue->render();
     }
 
