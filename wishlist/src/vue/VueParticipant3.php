@@ -161,6 +161,7 @@ class VueParticipant3 extends VuePrincipale
             $res = $this->liste->save();
             if ($res) {
                 $messageSupOk = "L'image a bien été supprimée !";
+                $this->app->redirect($url);
                 self::getApp()->redirect($url);
             }
         }
@@ -169,6 +170,7 @@ class VueParticipant3 extends VuePrincipale
         if (isset($_POST['imgWeb'])){
             $textImg = $_POST['textImgWeb'];
             $textImg = filter_var($textImg, FILTER_SANITIZE_SPECIAL_CHARS);
+            if ($textImg != "") {
             $item = Item::where("id" , "=" , $_SESSION['idItemActuel'])->first();
             $item->img = 'imageWeb.jpg';
             $lienVersImageWeb = self::getURLimages() . '/imageWeb.jpg';
@@ -177,6 +179,8 @@ class VueParticipant3 extends VuePrincipale
             copy($textImg, $fichier);
             $item->save();
             $messageImgWebOk =  "Ajout de l'image web réussi !";
+            $this->app->redirect($url);
+            }
             self::getApp()->redirect($url);
         }
 
