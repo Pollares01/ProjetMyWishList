@@ -130,114 +130,6 @@ END;
         return "<h1> Les items de la liste sont : </h1><br> $res";
     }
 
-    private function affichageItemID()
-    {
-        $lienVersImage = self::getURLimages() . $this->liste->img;
-        $_SESSION['idItemActuel'] = $this->liste->id;
-        $nom = $this->liste->nom;
-        $desc = $this->liste->descr;
-        $id = $this->liste->id;
-        $tarif = $this->liste->tarif;
-        $url = self::getApp()->urlFor('afficher_item_id_post',['id'=>$id]);
-        $urlAjoutImg = self::getApp()->urlFor('ajout_img');
-        //supression d'une image - fonctionnalité 13
-        $messageSupOk = "";
-        if (isset($_POST['deleteImg'])) {
-            $this->liste->img='';
-            $res = $this->liste->save();
-            if ($res) {
-                $messageSupOk = "L'image a bien été supprimée !";
-                $this->app->redirect($url);
-                self::getApp()->redirect($url);
-            }
-        }
-        $messageAjoutOk = "";
-        $messageImgWebOk = "";
-        if (isset($_POST['imgWeb'])){
-            $textImg = $_POST['textImgWeb'];
-            $textImg = filter_var($textImg, FILTER_SANITIZE_SPECIAL_CHARS);
-            if ($textImg != "") {
-            $item = Item::where("id" , "=" , $_SESSION['idItemActuel'])->first();
-            $item->img = 'imageWeb.jpg';
-            $lienVersImageWeb = self::getURLimages() . '/imageWeb.jpg';
-            //$fichier = $_SERVER['DOCUMENT_ROOT'].'/ProjetMyWishList/ProjetMyWishList/wishlist/img/imageWeb.jpg';
-            $fichier = $_SERVER['DOCUMENT_ROOT']. $lienVersImageWeb;
-            copy($textImg, $fichier);
-            $item->save();
-            $messageImgWebOk =  "Ajout de l'image web réussi !";
-            $this->app->redirect($url);
-            }
-            self::getApp()->redirect($url);
-        }
-
-        if (isset($_POST['envoyer'])) {
-            $item = Item::where("id" , "=" , $_SESSION['idItemActuel'])->first();
-              $target_file = 'img/';
-              move_uploaded_file($_FILES['img']["tmp_name"], $target_file . $_FILES['img']["name"]);
-              $item->img=$_FILES['img']["name"];
-              $item->save();
-              $messageAjoutOk =  "Ajout de l'image réussi !";
-              self::getApp()->redirect($url);
-          }
-       
-        /**if (isset($_POST['participant']) && isset($_POST['messageParticipant'])) {
-            if (isset($_SESSION['participants']) && isset($_SESSION['messageParticipant'])){
-                $messageReservItem = $_SESSION['messageParticipant'];
-                $messageReservItem[$id] = $_POST['messageParticipant'];
-                $_SESSION['messageParticipant'] = $messageReservItem;
-                $tabReservItem = $_SESSION['participants'];
-                $tabReservItem[$id] = $_POST['participant'];
-                $_SESSION['participants'] = $tabReservItem;
-            }else{
-                $messageReservItem = array($id => $_POST['messageParticipant']);
-                $_SESSION['messageParticipant'] = $messageReservItem;
-                $tabReservItem = array($id => $_POST['participant']);
-                $_SESSION['participants'] = $tabReservItem;
-            }
-        }
-        if(isset($_SESSION['participants']) && isset($_SESSION['participants'][$id]) && isset($_SESSION['messageParticipant']) && isset($_SESSION['messageParticipant'][$id])) {
-            $tabReservItem = $_SESSION['participants'];
-            $valeurParticipant = $tabReservItem[$id];
-            $messageReservItem = $_SESSION['messageParticipant'];
-            $valeurMessage = $messageReservItem[$id];
-        }else{**/
-            $valeurParticipant = '';
-            $valeurMessage = '';
-        $res = "   
-                    <br>
-                    <div class=\"card\" style=\"width: 18rem;\">
-                    <span class='border border-primary'>
-                        <form method='POST' action=$url>
-                            <button type='submit' name='deleteImg'>Supprimer</button>
-                            </form>
-                            <form method='POST' action=$url>
-                            <input type='text' name ='textImgWeb' placeHolder='url ici !'>
-                            <button type='submit' name='imgWeb'>Ok</button>
-                            </form>
-                        <form method='POST' action=$url enctype='multipart/form-data'>
-                            <input type='file' accept='test.png' name='img' >
-                            <button type='submit' name='envoyer'>Envoyer</button>
-                            </form>
-                          <img src=\"$lienVersImage\" class=\"card-img-top\" alt=\"\">
-                          <div class=\"card-body\">
-                                <h5 class=\"card-title\">$nom</h5>
-                                <p class=\"card-text\">$desc
-                                </br>
-                                Tarif : $tarif €</p>
-                          </div>
-                          <form id='formulaireItem' method='POST' action=$url>
-                            <input type='text' name='participant' placeholder='Nom du Participant' value=$valeurParticipant>
-                            <button type='submit' name='valider' value='valid_reserverItem'>Valider</button>
-                            <textarea class='messageReservFormu' name='messageParticipant' placeholder='Un petit message ?'>$valeurMessage</textarea>
-                          </form>
-                          <p>$messageSupOk</p>
-                          <p>$messageAjoutOk</p>
-                          <p>$messageImgWebOk</p>
-                    </span>
-                    </div>";
-        return $res;
-    }
-
     /**
      * fonction utilisée pour le rendu des vues
      */
@@ -251,10 +143,6 @@ END;
             //cas où l'on veut afficher les items d'une liste
             case 'ITEM_LISTE' : {
                 $content = $this->affichageItemsDeListe();
-                break;
-            }
-            case 'ITEM_ID' : {
-                $content = $this->affichageItemID();
                 break;
             }
             case 'AFFICHER_UNE_LISTE' : {
