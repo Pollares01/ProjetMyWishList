@@ -180,7 +180,7 @@ END;
               self::getApp()->redirect($url);
           }
        
-        if (isset($_POST['participant']) && isset($_POST['messageParticipant'])) {
+        /**if (isset($_POST['participant']) && isset($_POST['messageParticipant'])) {
             if (isset($_SESSION['participants']) && isset($_SESSION['messageParticipant'])){
                 $messageReservItem = $_SESSION['messageParticipant'];
                 $messageReservItem[$id] = $_POST['messageParticipant'];
@@ -200,10 +200,9 @@ END;
             $valeurParticipant = $tabReservItem[$id];
             $messageReservItem = $_SESSION['messageParticipant'];
             $valeurMessage = $messageReservItem[$id];
-        }else{
+        }else{**/
             $valeurParticipant = '';
             $valeurMessage = '';
-        }
         $res = "   
                     <br>
                     <div class=\"card\" style=\"width: 18rem;\">

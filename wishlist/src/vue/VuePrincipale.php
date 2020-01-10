@@ -1,9 +1,5 @@
 <?php
-
-
 namespace wishlist\vue;
-
-
 use Slim\Slim;
 
 class VuePrincipale
