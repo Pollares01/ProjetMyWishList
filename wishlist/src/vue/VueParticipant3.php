@@ -35,6 +35,8 @@ class VueParticipant3 extends VuePrincipale
         }
         $res = "
             </br>
+            <h1>Veuillez entrer le Token de la liste voulue :</h1>
+            </br>
             <form id='formulaireListe' method='POST' action=$url>
                 <input type='text' name='demandeUneListe' placeholder='Token De La Liste'>
                 <button type='submit' name='valider' value='valid_reserverItem'>Valider</button>
@@ -78,6 +80,7 @@ class VueParticipant3 extends VuePrincipale
                     $value->titre
                     </div>
                 </a></br>
+                <p>En rentrant le Token de modification de cette liste vous pourrez modifier ses informations générales ainsi qu'ajouter un item.</p>
                 <form id='formulaireModifListe' method='POST' action=$url>
                     <input type='text' name='demandeModifListe' placeholder='Token de modification de la liste'>
                     <button type='submit' name='valider' value='valid_modifierListe'>Valider</button>
