@@ -113,10 +113,10 @@ class ListeController
         $titre = filter_var($titre, FILTER_SANITIZE_STRING);
         $liste->titre = $titre;
 
-        $liste =  $_POST['modifListe_description'];
-        $liste= filter_var($liste, FILTER_SANITIZE_SPECIAL_CHARS);
-        $liste = filter_var($liste, FILTER_SANITIZE_STRING);
-        $liste->description = $liste;
+        $desc =  $_POST['modifListe_description'];
+        $desc = filter_var($desc, FILTER_SANITIZE_SPECIAL_CHARS);
+        $desc = filter_var($desc, FILTER_SANITIZE_STRING);
+        $liste->description = $desc;
         $liste->save();
         $liste = Liste::where('tokenModif','=',$tokenModif)->first();
 
