@@ -15,13 +15,23 @@ class VueListeCree extends VuePrincipale {
     private function creationDeLaListe() {
       $tokenGenerated = $this->liste->token;
       $tokenModifGenerated = $this->liste->tokenModif;
-        print "Vous avez créé une liste de titre : " . $this->liste->titre . ", de description : " . $this->liste->description . ", de date d'expiration : " . $this->liste->expiration;
+      $titre = $this->liste->titre;
+      $description = $this->liste->description;
+      $expiration = $this->liste->expiration;
         echo <<<END
-        <h5>Token pour partager la liste</h5>
-        <textarea  name='urlToken'>$tokenGenerated</textarea>
-        <h5>Token pour modifier la liste</h5>
-        <textarea  name='urlToken'>$tokenModifGenerated</textarea>
-END;
+        <br>
+        <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">$titre</h5>
+          <p class="card-text">$description</p>
+          <p class="card-text"> <p class="mb-2 text-primary">Date d'expiration : </p>$expiration</p>
+          <h6 class="card-subtitle mb-2 text-primary">Token pour partager la liste :</h6>
+          <p class="card-text">$tokenGenerated</p>
+          <h6 class="card-subtitle mb-2 text-primary">Token pour modifier la liste :</h6>
+          <p class="card-text">$tokenModifGenerated</p>
+        </div>
+      </div>
+ END;
     }
 
     public function render() {
