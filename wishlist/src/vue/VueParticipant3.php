@@ -73,7 +73,7 @@ class VueParticipant3 extends VuePrincipale
                 <p>En rentrant le Token de modification de cette liste vous pourrez modifier ses informations générales ainsi qu'ajouter un item.</p>
                 <form id='formulaireModifListe' method='POST' action=$url>
                     <input type='text' name='demandeModifListe' placeholder='Token de modification de la liste'>
-                    <button type="button" class="btn btn-primary">Valider</button>
+                    <button type="submit" class="btn btn-primary">Valider</button>
                 </form>
                 </br>
                 <h5>Nombre des participants à la liste</h5>

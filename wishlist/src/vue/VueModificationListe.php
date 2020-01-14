@@ -116,7 +116,7 @@ $txtModif
 
     public function afficherItems($listItem){
         foreach ($listItem as $value){
-            $lien = self::getApp()->urlFor('afficher_item_id', ['id' => $value->id]);
+            $lien = self::getApp()->urlFor('modifier_item_id', ['id' => $value->id]);
             $this->listItemAfficher .=  "
                                     <a href=\"$lien\" class='text-black-50'>
                                     <h3 class='text-liste-main'>$value->nom</h3>
@@ -131,7 +131,7 @@ $txtModif
     public function render(){
         $menu = self::getMenu();
         $footer = self::getFooter();
-        $content = self::modificationListe();
+        $content = $this->modificationListe();
         $html = "
                 $menu
                 <div class=\"container h - 100\">

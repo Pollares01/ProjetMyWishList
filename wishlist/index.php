@@ -81,4 +81,15 @@ $app->post('/ajout_item/:tokenModif', function($tokenModif){
     ListeController::ajoutItem($tokenModif);
 })->name('ajouter_item_reussi');
 
+$app->get('/modifer/item/:id', function($id){
+    ItemController::modifierItemDansListe($id);
+})->name('modifier_item_id');
+
+$app->post('/modifier/item/:id', function($id){
+    ItemController::modifierItemEnregistrer($id);
+})->name('modifier_item_ap_formulaire');
+
+$app->post('/liste/modifier/uneliste/itemSupprime/:id', function($id){
+    ItemController::supprimerItem($id);
+})->name('supprimer_item');
 $app->run();
