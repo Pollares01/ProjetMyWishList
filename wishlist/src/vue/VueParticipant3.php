@@ -28,7 +28,7 @@ class VueParticipant3 extends VuePrincipale
             $token = $_POST['demandeUneListe'];
             $request = Liste::select('no')->where('token', '=' , $token)->first();
             if ($request != null){
-                self::getApp()->redirect(self::getApp()->urlFor('afficher_une_liste_post',['token' => $token]));
+                self::getApp()->redirect(self::getApp()->urlFor('afficher_une_liste',['token' => $token]));
             }else{
                 $url = self::getApp()->urlFor('demander_une_liste');
             }
@@ -59,6 +59,8 @@ class VueParticipant3 extends VuePrincipale
         }else{
             $url = self::getApp()->urlFor('afficher_une_liste_post',['token'=>$this->liste->token]);
         }
+        $url2 = self::getApp()->urlFor('afficher_une_liste_post',['token'=>$this->liste->token]);
+        $value = $this->liste;
         $res = <<<END
                 </br>
                 <a href="$lien" class='text-black-50'>
@@ -66,10 +68,12 @@ class VueParticipant3 extends VuePrincipale
                         $titre
                     </div>
                 </a></br>
+                $value->messages
+                </br></br>
                 <p>En rentrant le Token de modification de cette liste vous pourrez modifier ses informations générales ainsi qu'ajouter un item.</p>
                 <form id='formulaireModifListe' method='POST' action=$url>
                     <input type='text' name='demandeModifListe' placeholder='Token de modification de la liste'>
-                    <button type='submit' name='valider' value='valid_modifierListe'>Valider</button>
+                    <button type="button" class="btn btn-primary">Valider</button>
                 </form>
                 </br>
                 <h5>Nombre des participants à la liste</h5>
@@ -84,6 +88,12 @@ class VueParticipant3 extends VuePrincipale
                 <div>
                     $this->resultat
                 </div>
+                </br>
+                <form class="test" method="POST" action=$url2>           
+                    <textarea class="textareaAffich" id="textareaAffich" name="une_liste_message"></textarea>
+                    </br>
+                    <button type="submit" name="singlebutton" class="btn btn-primary">Valider</button>
+                </form>
                 </br>
 END;
         return $res;

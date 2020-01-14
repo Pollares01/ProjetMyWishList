@@ -21,6 +21,10 @@ class ListeController
         $resultat = "";
         $nombreParticipants = 0;
         $l = $liste;
+        if( isset($_POST['une_liste_message'])){
+            $liste->messages = $_POST['une_liste_message'];
+            $liste->save();
+        }
         $dateCourante = date("Y") . "-" . date("m") ."-" . date("d") ;
                 $item = Item::get();
                 foreach ($item as $v) {
