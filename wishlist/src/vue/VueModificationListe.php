@@ -3,10 +3,11 @@ namespace wishlist\vue;
 
 class   VueModificationListe extends VuePrincipale{
 
-    private $liste,$lienAffichageListe;
+    private $liste,$lienAffichageListe, $listItemAfficher;
     public function __construct($tabItems)
     {
         parent::__construct();
+        $this->listItemAfficher = "";
         $this->liste = $tabItems;
         $value = $this->liste;
         if($tabItems != null){
@@ -15,6 +16,7 @@ class   VueModificationListe extends VuePrincipale{
     }
 
     public function modificationListe(){
+        $items = $this->listItemAfficher;
         if(isset($_POST['ajoutItem_Valider'])){
             $txtAjout = "<div class=\"alert alert-success alert-dismissible fade show\" role=\"alert\">
   <strong>Trop bien !</strong> Votre item a été ajouté à votre liste !
@@ -95,6 +97,10 @@ $txtModif
 </form>
 
     </div>
+    <div class='col'>
+    <legend>Contenu de la liste !</legend>
+        $items
+    </div>
   </div>
 </div>
 
@@ -108,7 +114,18 @@ $txtModif
         return $res;
     }
 
-
+    public function afficherItems($listItem){
+        foreach ($listItem as $value){
+            $lien = self::getApp()->urlFor('afficher_item_id', ['id' => $value->id]);
+            $this->listItemAfficher .=  "
+                                    <a href=\"$lien\" class='text-black-50'>
+                                    <h3 class='text-liste-main'>$value->nom</h3>
+                                    </a>
+                                    <p>$value->descr</p>
+                                <br><br>
+                           ";
+        }
+    }
 
 
     public function render(){
