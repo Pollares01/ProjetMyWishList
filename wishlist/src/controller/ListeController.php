@@ -65,11 +65,14 @@ class ListeController
     public static function modifierUneListe($tokenModif){
         $liste = Liste::where('tokenModif','=',$tokenModif)->first();
         $vue = new VueModificationListe($liste);
+        $listItem = Item::where('liste_id','=', $liste->no)->get();
+        $vue->afficherItems($listItem);
         $vue->render();
+
+
     }
 
     public static function ajoutItem($tokenModif){
-
 
         $liste = Liste::where('tokenModif','=',$tokenModif)->first();
         $item = new Item();
@@ -97,11 +100,12 @@ class ListeController
         $item->liste_id = $liste->no;
         $item->save();
         $vue = new VueModificationListe($liste);
+        $listItem = Item::where('liste_id','=', $liste->no)->get();
+        $vue->afficherItems($listItem);
         $vue->render();
     }
 
     public static function modificationListe($tokenModif){
-
 
         $liste = Liste::where('tokenModif','=',$tokenModif)->first();
         $titre = $_POST['modifListe_titre'];
@@ -115,7 +119,10 @@ class ListeController
         $liste->description = $liste;
         $liste->save();
         $liste = Liste::where('tokenModif','=',$tokenModif)->first();
+
         $vue = new VueModificationListe($liste);
+        $listItem = Item::where('liste_id','=', $liste->no)->get();
+        $vue->afficherItems($listItem);
         $vue->render();
     }
 
