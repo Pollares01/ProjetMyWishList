@@ -58,7 +58,7 @@ class ListeController
     }
 
     public static function creerListe() {
-        $vue = new VueCreerListe();
+        $vue = new VueCreerListe("");
         $vue->render();
     }
 

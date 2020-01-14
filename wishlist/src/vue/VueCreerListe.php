@@ -6,13 +6,22 @@ class VueCreerListe extends VuePrincipale {
 
 
     private $urlListeCree;
+    private $text;
 
-    public function __construct() {
-
+    public function __construct($txt) {
+        $this->text = $txt;
         parent::__construct();
-
         $this->urlListeCree = self::getApp()->urlFor('liste_cree');
+    }
 
+    private function erreurDate() {
+        if ($this->text == "erreurDate") {
+            echo <<<END
+            <div class="alert alert-danger" role="alert">
+  Insertion impossible car date enregistrée inférieur à la date courante.
+</div>
+END;
+        }
     }
 
     public function render() {
@@ -63,6 +72,7 @@ class VueCreerListe extends VuePrincipale {
                 </div>
                 $foot
 END;
-        echo $html;
+        echo $html . "</br>";
+        $this->erreurDate();
     }
 }

@@ -6,6 +6,7 @@ use wishlist\vue\VueListeCree;
 use wishlist\modele\Liste;
 use wishlist\modele\Item;
 use wishlist\vue\VueImageAjout;
+use wishlist\vue\VueCreerListe;
 
 class FormulaireOKController
 {
@@ -26,6 +27,11 @@ class FormulaireOKController
             $titre = $_POST['titre'];
             $description = $_POST['description'];
             $date =  $_POST['expiration'];
+            $dateCourante = date("Y") . "-" . date("m") ."-" . date("d");
+            if ($date < $dateCourante) {
+                $vue =  new VueCreerListe("erreurDate");
+                $vue->render();
+            } else {
             $titre = filter_var($titre, FILTER_SANITIZE_SPECIAL_CHARS);
             $titre = filter_var($titre, FILTER_SANITIZE_STRING);
             $description = filter_var($description, FILTER_SANITIZE_SPECIAL_CHARS);
@@ -33,7 +39,6 @@ class FormulaireOKController
             $date = filter_var($date, FILTER_SANITIZE_SPECIAL_CHARS);
             $date = filter_var($date, FILTER_SANITIZE_STRING);
             //$image = $_FILES['image']['name'];
-            
             $l->titre = $titre;
             $l->description = $description;
             $l->expiration = $date;
@@ -43,6 +48,7 @@ class FormulaireOKController
             $res = $l->save();
             $vue =  new VueListeCree($l);
             $vue->render();
+            }
           }
         
     }

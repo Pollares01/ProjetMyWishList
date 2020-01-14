@@ -24,7 +24,6 @@ class VueListeCree extends VuePrincipale {
 END;
     }
 
-
     public function render() {
         $menu = self::getMenu();
         $footer = self::getFooter();
