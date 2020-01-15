@@ -13,7 +13,9 @@ class VueCreerListe extends VuePrincipale {
         parent::__construct();
         $this->urlListeCree = self::getApp()->urlFor('liste_cree');
     }
-
+    /*
+    * fonction permettant de traiter le cas lorsque la date entrée par l'utilisateur est inférieure à la date courante
+    */
     private function erreurDate() {
         if ($this->text == "erreurDate") {
             echo <<<END

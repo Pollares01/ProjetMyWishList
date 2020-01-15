@@ -9,13 +9,18 @@ use wishlist\vue\VueParticipant3;
 use wishlist\vue\VueCreerListe;
 class ListeController
 {
+    /*
+    * permet d'afficher la liste de toutes les listes
+    */
     public static function afficherListe()
     {
         $list = Liste::get();
         $vue = new VueParticipant3($list, 'ALL_LISTE');
         $vue->render();
     }
-
+    /*
+    * affichage de la liste correspondant a son token
+    */
     public static function afficherUneListe($token){
         $liste = Liste::where('token','=',$token)->first();
         $value = $liste;
@@ -26,6 +31,9 @@ class ListeController
             $liste->messages = $_POST['une_liste_message'];
             $liste->save();
         }
+        /*
+        * permet de récuperer la date courante selon le format de notre base de données
+        */
         $dateCourante = date("Y") . "-" . date("m") ."-" . date("d") ;
                 $item = Item::get();
                 foreach ($item as $v) {
@@ -44,13 +52,17 @@ class ListeController
         $vue = new VueParticipant3($liste,$nombreParticipants,$resultat,'AFFICHER_UNE_LISTE');
         $vue->render();
     }
-
+    /*
+    * Affiche les liste publiques et demande le token pour acceder a une liste
+    */
     public static function demanderListe(){
         $listes = Liste::where('public','=','1')->get();
         $vue = new VueParticipant3($listes,null,null,'DEMANDER_UNE_LISTE');
         $vue->render();
     }
-
+    /*
+    * fonction permettant l'affichage des items d'une liste
+    */
     public static function afficherItemDeListe($no)
     {
         $liste = Liste::where('no', '=', $no)->first();
@@ -58,22 +70,26 @@ class ListeController
         $vue = new VueParticipant3($item,null,null, 'ITEM_LISTE');
         $vue->render();
     }
-
+    /*
+    * Affichage de la page correspondant au formulaire d'une création de liste 
+    */
     public static function creerListe() {
         $vue = new VueCreerListe("");
         $vue->render();
     }
-
+    /*
+    * fonction permettant la modifications des informations générales d'une liste
+    */
     public static function modifierUneListe($tokenModif){
         $liste = Liste::where('tokenModif','=',$tokenModif)->first();
         $vue = new VueModificationListe($liste);
         $listItem = Item::where('liste_id','=', $liste->no)->get();
         $vue->afficherItems($listItem);
         $vue->render();
-
-
     }
-
+    /*
+    * fonction permettant l'ajout d'items dans la liste 
+    */
     public static function ajoutItem($tokenModif){
 
         $liste = Liste::where('tokenModif','=',$tokenModif)->first();
@@ -106,7 +122,9 @@ class ListeController
         $vue->afficherItems($listItem);
         $vue->render();
     }
-
+    /*
+    * fonction permettant la modification d'une liste
+    */
     public static function modificationListe($tokenModif){
 
         $liste = Liste::where('tokenModif','=',$tokenModif)->first();
@@ -127,14 +145,14 @@ class ListeController
         $vue->afficherItems($listItem);
         $vue->render();
     }
-
+    /*
+    * fonction permettant la suppression d'une liste
+    */
     public static function supprimerListe($token){
 
             $liste = Liste::where('tokenModif', '=', $token)->first();
             $liste->delete();
             $app = Slim::getInstance();
             $app->redirect($app->urlFor('demander_une_liste'));
-        
-
     }
 }

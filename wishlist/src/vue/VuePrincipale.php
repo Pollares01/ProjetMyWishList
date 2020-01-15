@@ -23,7 +23,9 @@ class VuePrincipale
         $this->URLbootstrapJS = $this->app->request->getRootUri() . '/public/boostrap.min.js';
         $this->URLpersoCSS = $this->app->request->getRootUri() . '/public/css_perso.css';
     }
-
+    /*
+    * permet l'obtention du menu de navigation
+    */
     protected function getMenu()
     {
         return <<<END
@@ -62,7 +64,9 @@ class VuePrincipale
                 </header>
 END;
     }
-
+    /*
+    * fonction permet de recuperer facilement le footer
+    */
     protected function getFooter()
     {
         return '<script src="$this->URLbootstrapJS"></script>
@@ -71,6 +75,7 @@ END;
     }
 
     /**
+     * retourne l'app de slim
      * @return Slim|null
      */
     public function getApp()
@@ -79,6 +84,7 @@ END;
     }
 
     /**
+     * permet d'obtenir l'url vers les images
      * @return string
      */
     public function getURLimages(): string

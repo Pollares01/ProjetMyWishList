@@ -6,84 +6,37 @@ use wishlist\modele\Item;
 class VueItem extends VuePrincipale{
 
     private $urlRevenirListe,$item;
+    private $mso, $mao,$miwo;
 
-    public function __construct($item)
+    public function __construct($item,$messageSupOk,$messageAjoutOk,$messageImgWebOk)
     {
         parent::__construct();
         $this->item = $item;
         $value = $this->item;
         $this->urlRevenirListe = self::getApp()->urlFor('afficher_item_id',['id' => $value->id]);
+        $this->mso = $messageSupOk;
+        $this->mao = $messageAjoutOk;
+        $this->miwo = $messageImgWebOk;
     }
 
+    /*
+    * Permet l'affichage de l'item en question selon les différents changements
+    */
     private function affichageItemID()
     {
-        $lienVersImage = self::getURLimages() . $this->item->img;
-        $_SESSION['idItemActuel'] = $this->item->id;
         $nom = $this->item->nom;
         $desc = $this->item->descr;
         $id = $this->item->id;
         $tarif = $this->item->tarif;
+        $messageSupOk = $this->mso;
+        $messageAjoutOk = $this->mao;
+        $messageImgWebOk = $this->miwo;
+        $lienVersImage = self::getURLimages() . $this->item->img;
+        $_SESSION['idItemActuel'] = $this->item->id;
         $url = self::getApp()->urlFor('afficher_item_id_post',['id'=>$id]);
         $urlAjoutImg = self::getApp()->urlFor('ajout_img');
-        //supression d'une image - fonctionnalité 13
-        $messageSupOk = "";
-        if (isset($_POST['deleteImg'])) {
-            $this->item->img='';
-            $res = $this->item->save();
-            if ($res) {
-                $messageSupOk = "L'image a bien été supprimée !";
-                self::getApp()->redirect($url);
-            }
-        }
+        
         $messageAjoutOk = "";
-        $messageImgWebOk = "";
-        if (isset($_POST['imgWeb'])){
-            $textImg = $_POST['textImgWeb'];
-            if ($textImg != "") {
-            $textImg = filter_var($textImg, FILTER_SANITIZE_SPECIAL_CHARS);
-            $item = Item::where("id" , "=" , $_SESSION['idItemActuel'])->first();
-            $item->img = 'imageWeb.jpg';
-            $lienVersImageWeb = self::getURLimages() . '/imageWeb.jpg';
-            //$fichier = $_SERVER['DOCUMENT_ROOT'].'/ProjetMyWishList/ProjetMyWishList/wishlist/img/imageWeb.jpg';
-            $fichier = $_SERVER['DOCUMENT_ROOT']. $lienVersImageWeb;
-            copy($textImg, $fichier);
-            $item->save();
-            $messageImgWebOk =  "Ajout de l'image web réussi !";
-            self::getApp()->redirect($url);
-            }
-        }
-
-        if (isset($_POST['envoyer'])) {
-            $item = Item::where("id" , "=" , $_SESSION['idItemActuel'])->first();
-            $target_file = 'img/';
-            move_uploaded_file($_FILES['img']["tmp_name"], $target_file . $_FILES['img']["name"]);
-            $item->img=$_FILES['img']["name"];
-            $item->save();
-            $messageAjoutOk =  "Ajout de l'image réussi !";
-            self::getApp()->redirect($url);
-        }
-
-        /**if (isset($_POST['participant']) && isset($_POST['messageParticipant'])) {
-        if (isset($_SESSION['participants']) && isset($_SESSION['messageParticipant'])){
-        $messageReservItem = $_SESSION['messageParticipant'];
-        $messageReservItem[$id] = $_POST['messageParticipant'];
-        $_SESSION['messageParticipant'] = $messageReservItem;
-        $tabReservItem = $_SESSION['participants'];
-        $tabReservItem[$id] = $_POST['participant'];
-        $_SESSION['participants'] = $tabReservItem;
-        }else{
-        $messageReservItem = array($id => $_POST['messageParticipant']);
-        $_SESSION['messageParticipant'] = $messageReservItem;
-        $tabReservItem = array($id => $_POST['participant']);
-        $_SESSION['participants'] = $tabReservItem;
-        }
-        }
-        if(isset($_SESSION['participants']) && isset($_SESSION['participants'][$id]) && isset($_SESSION['messageParticipant']) && isset($_SESSION['messageParticipant'][$id])) {
-        $tabReservItem = $_SESSION['participants'];
-        $valeurParticipant = $tabReservItem[$id];
-        $messageReservItem = $_SESSION['messageParticipant'];
-        $valeurMessage = $messageReservItem[$id];
-        }else{**/
         $valeurParticipant = $this->item->participant;
         $valeurMessage = $this->item->messageParticipant;
         $res = "   

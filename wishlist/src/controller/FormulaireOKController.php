@@ -10,11 +10,15 @@ use wishlist\vue\VueCreerListe;
 
 class FormulaireOKController
 {
+    /*
+    * fonction pour creer une liste
+    */
     public static function control(){
         if (isset($_POST['creer'])){
             $l = new Liste();
-            //$target_file = 'img/';
-            //move_uploaded_file($_FILES["image"]["tmp_name"], $target_file . $_FILES["image"]["name"]);
+            /*
+            * Génération des token de modification de liste et de partage de liste
+            */
             $tokenGenerated = "";
             $token = openssl_random_pseudo_bytes(32);
             $token = bin2hex($token);
@@ -28,6 +32,10 @@ class FormulaireOKController
             $description = $_POST['description'];
             $date =  $_POST['expiration'];
             $dateCourante = date("Y") . "-" . date("m") ."-" . date("d");
+            /*
+            * Si la date est incorrecte soit inférieur à la date actuelle il est impossible de créer la liste
+            * ce qui affiche une erreur à la page de création de liste
+            */
             if ($date < $dateCourante) {
                 $vue =  new VueCreerListe("erreurDate");
                 $vue->render();
@@ -38,11 +46,17 @@ class FormulaireOKController
             $description = filter_var($description, FILTER_SANITIZE_STRING);
             $date = filter_var($date, FILTER_SANITIZE_SPECIAL_CHARS);
             $date = filter_var($date, FILTER_SANITIZE_STRING);
-            //$image = $_FILES['image']['name'];
+            /*
+            * Si la check box est validée on rentre dans le if pour rendre la liste publique
+            * sinon elle rend la liste privée
+            */
             if (isset($_POST['liste_publique'])) {
                 $l->public = 1;
             } else 
                 $l->public = null;
+            /*
+            * On associe les données filtrées à la liste null pour ensuite l'ajouter dans la base de données
+            */
             $l->titre = $titre;
             $l->description = $description;
             $l->expiration = $date;
@@ -55,10 +69,5 @@ class FormulaireOKController
             }
           }
         
-    }
-
-    public static function control3() {
-        $vue = new VueImageAjout();
-        $vue->render();
     }
 }
