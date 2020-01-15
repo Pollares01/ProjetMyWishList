@@ -51,6 +51,7 @@ class   VueModificationListe extends VuePrincipale{
         }
         $lien2 = self::getApp()->urlFor('ajouter_item_reussi', ['tokenModif' => $tokenModif]);
         $url = self::getApp()->urlFor('modification_une_liste',['tokenModif'=>$tokenModif]);
+        $url2 = self::getApp()->urlFor('demander_une_liste_ap_supp', ['token'=>$tokenModif]);
         $res = "
                 <form class=\"form-horizontal\" method='post' action=$url>
 <fieldset>
@@ -100,6 +101,12 @@ $txtModif
     <div class='col'>
     <legend>Contenu de la liste !</legend>
         $items
+    </div>
+    
+    <div class='col'>
+        <form class=\"form-horizontal\" method=\"post\" action=\"$url2\">
+            <button class='btn btn-danger' type='submit' name='modifItem_valider'>Supprimer la liste !</button>
+        </form>
     </div>
   </div>
 </div>

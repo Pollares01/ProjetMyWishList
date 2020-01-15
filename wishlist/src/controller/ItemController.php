@@ -1,5 +1,6 @@
 <?php
 namespace wishlist\controller;
+use Slim\Slim;
 use wishlist\modele\Item;
 use wishlist\modele\Liste;
 use wishlist\vue\VueCreerItem;
@@ -73,10 +74,9 @@ class ItemController{
         $item = Item::where('id','=',$id)->first();
         $liste = Liste::where('no', '=', $item->liste_id)->first();
         $item->delete();
-        $vue = new VueModificationListe($liste);
-        $listItem = Item::where('liste_id','=', $liste->no)->get();
-        $vue->afficherItems($listItem);
-        $vue->render();
+
+        $app = Slim::getInstance();
+        $app->redirect($app->urlFor('modifier_une_liste', ['tokenModif'=>$liste->tokenModif]));
     }
 
 }

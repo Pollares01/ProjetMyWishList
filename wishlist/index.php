@@ -33,6 +33,10 @@ $app->post('/liste/modifier/informationsListe/:tokenModif', function($tokenModif
     Listecontroller::modificationListe($tokenModif);
 })->name('modification_une_liste');
 
+$app->post('/liste/supprimer/:token', function($token){
+    ListeController::supprimerListe($token);
+})->name('demander_une_liste_ap_supp');
+
 $app->get('/liste/afficher/demande', function(){
     ListeController::demanderListe();
 })->name('demander_une_liste');

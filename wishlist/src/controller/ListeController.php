@@ -1,5 +1,6 @@
 <?php
 namespace wishlist\controller;
+use Slim\Slim;
 use wishlist\modele\Item;
 use wishlist\modele\Liste;
 use wishlist\vue\VueAjoutItem;
@@ -126,4 +127,13 @@ class ListeController
         $vue->render();
     }
 
+    public static function supprimerListe($token){
+
+            $liste = Liste::where('tokenModif', '=', $token)->first();
+            $liste->delete();
+            $app = Slim::getInstance();
+            $app->redirect($app->urlFor('demander_une_liste'));
+        
+
+    }
 }
