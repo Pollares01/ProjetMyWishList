@@ -29,7 +29,7 @@ END;
         $foot = self::getFooter();
         $html = <<<END
                 $menu
-                
+                <br>
                 <div class="container h-100">
                     <div class="row h-100 align-items-center">
                            <div class="col-12 text-center">
@@ -54,6 +54,11 @@ END;
                            </div>
                            </div>
                        </div>
+                        <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="liste_publique" id="customCheck1">
+                        <label class="custom-control-label" for="customCheck1">Rendre la liste publique</label>
+                        </div>
+                        <br>
                            <div class="form-group">
                                <div class="form-check">
                                <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" required>

@@ -39,6 +39,10 @@ class FormulaireOKController
             $date = filter_var($date, FILTER_SANITIZE_SPECIAL_CHARS);
             $date = filter_var($date, FILTER_SANITIZE_STRING);
             //$image = $_FILES['image']['name'];
+            if (isset($_POST['liste_publique'])) {
+                $l->public = 1;
+            } else 
+                $l->public = null;
             $l->titre = $titre;
             $l->description = $description;
             $l->expiration = $date;
