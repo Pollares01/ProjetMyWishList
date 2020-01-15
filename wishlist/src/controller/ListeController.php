@@ -46,7 +46,8 @@ class ListeController
     }
 
     public static function demanderListe(){
-        $vue = new VueParticipant3(null,null,null,'DEMANDER_UNE_LISTE');
+        $listes = Liste::where('public','=','1')->get();
+        $vue = new VueParticipant3($listes,null,null,'DEMANDER_UNE_LISTE');
         $vue->render();
     }
 

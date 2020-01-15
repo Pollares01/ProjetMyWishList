@@ -35,6 +35,17 @@ class VueParticipant3 extends VuePrincipale
         }else{
             $url = self::getApp()->urlFor('demander_une_liste');
         }
+        $listesAffich = "";
+        foreach ($this->liste as $value){
+            $token = $value->token;
+            $lien = self::getApp()->urlFor('afficher_une_liste',['token' => $token]);
+            $listesAffich = $listesAffich . "\n" . "
+            <div class='bg-light shadow'>
+                                    <a href=\"$lien\" class='text-black-50'>
+                                    <h3 class='text-liste-main'>$value->titre</h3>
+                                    </a>
+            </div></br> ";
+        }
         $res = "
             </br>
             <h1>Veuillez entrer le Token de la liste voulue :</h1>
@@ -42,7 +53,11 @@ class VueParticipant3 extends VuePrincipale
             <form id='formulaireListe' method='POST' action=$url>
                 <input type='text' name='demandeUneListe' placeholder='Token De La Liste'>
                 <button type='submit' name='valider' value='valid_reserverItem'>Valider</button>
-            </form>";
+            </form>
+            </br>
+            Voici les listes publiques : </br></br>
+            $listesAffich
+            ";
         return $res;
     }
     private function affichageUneListe(){
