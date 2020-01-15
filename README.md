@@ -28,10 +28,10 @@ Token de modification : `g6xx2prmuwj4ozfihb06k68y265i1gmu`
 
 ##Fonctionnalités
 ####Enzo :
-1 - 2 - 3 - 4 - 5 - 7
+1 - 2 - 3 - 4 - 5 - 7 - Rendre une liste publique
 
 ###César :
-1 - 2 - 6 - 11 - 12 - 13 - 14 - 15 - 16
+1 - 2 - 6 - 11 - 12 - 13 - 14 - 15 - 16 - Rendre une liste publique
 
 ###Paul :
-1 - 2 - 8 - 9 - 10 
+1 - 2 - 8 - 9 - 10 - Supprimer une liste
