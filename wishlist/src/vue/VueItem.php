@@ -6,17 +6,13 @@ use wishlist\modele\Item;
 class VueItem extends VuePrincipale{
 
     private $urlRevenirListe,$item;
-    private $mso, $mao,$miwo;
 
-    public function __construct($item,$messageSupOk,$messageAjoutOk,$messageImgWebOk)
+    public function __construct($item)
     {
         parent::__construct();
         $this->item = $item;
         $value = $this->item;
         $this->urlRevenirListe = self::getApp()->urlFor('afficher_item_id',['id' => $value->id]);
-        $this->mso = $messageSupOk;
-        $this->mao = $messageAjoutOk;
-        $this->miwo = $messageImgWebOk;
     }
 
     /*
@@ -28,15 +24,10 @@ class VueItem extends VuePrincipale{
         $desc = $this->item->descr;
         $id = $this->item->id;
         $tarif = $this->item->tarif;
-        $messageSupOk = $this->mso;
-        $messageAjoutOk = $this->mao;
-        $messageImgWebOk = $this->miwo;
         $lienVersImage = self::getURLimages() . $this->item->img;
         $_SESSION['idItemActuel'] = $this->item->id;
         $url = self::getApp()->urlFor('afficher_item_id_post',['id'=>$id]);
         $urlAjoutImg = self::getApp()->urlFor('ajout_img');
-        
-        $messageAjoutOk = "";
         $valeurParticipant = $this->item->participant;
         $valeurMessage = $this->item->messageParticipant;
         $res = "   
@@ -66,9 +57,6 @@ class VueItem extends VuePrincipale{
                             <button type='submit' name='valider' value='valid_reserverItem'>Valider</button>
                             <textarea class='messageReservFormu' name='afficherItem_messageParticipant' placeholder='Un petit message ?'>$valeurMessage</textarea>
                           </form>
-                          <p>$messageSupOk</p>
-                          <p>$messageAjoutOk</p>
-                          <p>$messageImgWebOk</p>
                     </span>
                     </div>";
         return $res;

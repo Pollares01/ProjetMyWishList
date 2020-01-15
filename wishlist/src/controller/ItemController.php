@@ -15,7 +15,7 @@ class ItemController{
     */
     public static function afficherItemID($id){
         $item = Item::where("id" , "=" , $id)->first();
-        $vue = new VueItem($item,"","","");
+        $vue = new VueItem($item);
         $vue->render();
     }
     /*
@@ -39,7 +39,6 @@ class ItemController{
         if(isset($_POST['afficherItem_messageParticipant'])){
             $item->messageParticipant = $_POST['afficherItem_messageParticipant'];
         }
-        $messageAjoutOk = "";
         if (isset($_POST['envoyer'])) {
             if ($_FILES['img']["tmp_name"] != "") {
                 $item = Item::where("id" , "=" , $_SESSION['idItemActuel'])->first();
@@ -47,21 +46,17 @@ class ItemController{
                 move_uploaded_file($_FILES['img']["tmp_name"], $target_file . $_FILES['img']["name"]);
                 $item->img=$_FILES['img']["name"];
                 $item->save();
-                $messageAjoutOk =  "Ajout de l'image réussi !";
                 $app->redirect($url);
             }
         }
-        $messageSupOk = "";
         if (isset($_POST['deleteImg'])) {
             $item->img='';
             $res = $item->save();
             if ($res) {
-                $messageSupOk = "L'image a bien été supprimée !";
                $app->redirect($url);
             }
         }
 
-        $messageImgWebOk = "";
         if (isset($_POST['imgWeb'])){
             $textImg = $_POST['textImgWeb'];
             if ($textImg != "") {
@@ -72,12 +67,11 @@ class ItemController{
             $fichier = $_SERVER['DOCUMENT_ROOT']. $lienVersImageWeb;
             copy($textImg, $fichier);
             $item->save();
-            $messageImgWebOk =  "Ajout de l'image web réussi !";
             $app->redirect($url);
             }
         }
         $item->save();
-        $vue = new VueItem($item,$messageSupOk,$messageAjoutOk,$messageImgWebOk);
+        $vue = new VueItem($item);
         $vue->render();
     }
     /*
